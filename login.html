@@ -97,41 +97,21 @@
 
     <script>
         // ============================================================
-        // 🔥 SHEET.BEST API - SIRF USERS SHEET
+        // 🔥 APPS SCRIPT WEB APP URL (Already Added)
         // ============================================================
-        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7/0';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
 
         const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
         // ============================================================
-        // 1. GET ALL DATA FROM USERS SHEET
-        // ============================================================
-        async function getSheetData() {
-            try {
-                const response = await fetch(SHEET_BEST_URL);
-                return await response.json();
-            } catch (e) {
-                console.error('Error getting data:', e);
-                return [];
-            }
-        }
-
-        // ============================================================
-        // 2. GET SETTINGS (Pehli row se)
+        // 1. GET SETTINGS
         // ============================================================
         async function getSettings() {
             try {
-                const data = await getSheetData();
-                if (data && data.length > 0) {
-                    // Pehli row = settings data
-                    const firstRow = data[0];
-                    return {
-                        LoginCode: firstRow.LoginCode || '1234',
-                        AdminCode: firstRow.AdminCode || 'admin123',
-                        AdminName: firstRow.AdminName || 'Sultan'
-                    };
-                }
-                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getSettings`);
+                const data = await response.json();
+                console.log('📋 Settings:', data);
+                return data;
             } catch (e) {
                 console.error('Error getting settings:', e);
                 return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
@@ -139,58 +119,22 @@
         }
 
         // ============================================================
-        // 3. ADD/UPDATE USER
+        // 2. ADD USER
         // ============================================================
         async function addUser(name) {
             try {
-                const data = await getSheetData();
-                const existingUser = data.find(row => row.Name?.toLowerCase() === name.toLowerCase());
-
-                // Get settings from first row
-                const settings = await getSettings();
-
-                if (!existingUser) {
-                    // Naya user - first row settings ke saath, second row se users start
-                    // We'll append new user at the end
-                    await fetch(SHEET_BEST_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            Name: name.trim(),
-                            LoginTime: new Date().toISOString(),
-                            IsAdmin: 'FALSE',
-                            LoginCode: settings.LoginCode,
-                            AdminCode: settings.AdminCode,
-                            AdminName: settings.AdminName
-                        })
-                    });
-                    console.log('✅ New user added:', name);
-                } else {
-                    // Update existing user's login time
-                    // We'll add a new row with updated time (simpler)
-                    await fetch(SHEET_BEST_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            Name: name.trim(),
-                            LoginTime: new Date().toISOString(),
-                            IsAdmin: existingUser.IsAdmin || 'FALSE',
-                            LoginCode: settings.LoginCode,
-                            AdminCode: settings.AdminCode,
-                            AdminName: settings.AdminName
-                        })
-                    });
-                    console.log('🔄 User login time updated:', name);
-                }
-                return true;
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=addUser&name=${encodeURIComponent(name)}`);
+                const data = await response.json();
+                console.log('✅ Add user response:', data);
+                return data;
             } catch (e) {
                 console.error('Error adding user:', e);
-                return false;
+                return { error: e.toString() };
             }
         }
 
         // ============================================================
-        // 4. LOGIN
+        // 3. LOGIN
         // ============================================================
         const loginBtn = document.getElementById('loginBtn');
         const nameInput = document.getElementById('userName');
@@ -217,9 +161,6 @@
 
             const settings = await getSettings();
             
-            // Debug - check what settings we got
-            console.log('📋 Settings loaded:', settings);
-
             if (code !== settings.LoginCode) {
                 errorMsg.textContent = '❌ Invalid access code. Please try again.';
                 errorMsg.classList.add('show');
@@ -231,8 +172,10 @@
                 return;
             }
 
+            // ✅ Add user to sheet
             await addUser(name);
 
+            // Login successful
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('loginTime', Date.now());
             localStorage.setItem('userName', name);
@@ -252,12 +195,15 @@
         }
 
         loginBtn.addEventListener('click', attemptLogin);
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') accessInput.focus();
+        });
         accessInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') attemptLogin();
         });
 
         // ============================================================
-        // 5. TOGGLE VISIBILITY
+        // 4. TOGGLE VISIBILITY
         // ============================================================
         const toggleBtn = document.getElementById('toggleVisibility');
         let isVisible = false;
@@ -269,7 +215,7 @@
         });
 
         // ============================================================
-        // 6. AUTO-LOGIN CHECK
+        // 5. AUTO-LOGIN CHECK
         // ============================================================
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const loginTimeCheck = parseInt(localStorage.getItem('loginTime') || '0');
@@ -281,9 +227,8 @@
             }
         }
 
-        console.log('🔐 Sheet.best Login System Active');
+        console.log('🔐 Google Apps Script Login System Active');
         console.log('📌 Default Login Code: 1234');
-        console.log('📊 Using only users sheet');
     </script>
 
 </body>
