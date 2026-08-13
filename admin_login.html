@@ -15,7 +15,6 @@
             align-items: center;
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             padding: 20px;
-            transition: background 0.3s ease;
         }
         .login-container {
             width: 100%; max-width: 440px;
@@ -42,7 +41,7 @@
             transition: 0.3s ease; outline: none;
             text-align: center; letter-spacing: 4px;
         }
-        .input-group input:focus { border-color: #fbbf24; background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 30px rgba(251, 191, 36, 0.08); }
+        .input-group input:focus { border-color: #fbbf24; background: rgba(255, 255, 255, 0.08); }
         .input-group .toggle-visibility {
             position: absolute; right: 14px; bottom: 14px;
             background: none; border: none;
@@ -59,38 +58,13 @@
             font-family: 'Inter', sans-serif; margin-top: 8px;
         }
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(251, 191, 36, 0.25); }
-        .login-btn:active { transform: scale(0.97); }
-        .error-msg { color: #f87171; font-size: 14px; margin-top: 14px; min-height: 24px; display: none; }
+        .error-msg { color: #f87171; font-size: 14px; margin-top: 14px; display: none; }
         .error-msg.show { display: block; }
-        .footer-text { margin-top: 24px; color: #475569; font-size: 12px; letter-spacing: 0.3px; }
+        .footer-text { margin-top: 24px; color: #475569; font-size: 12px; }
         .footer-text span { color: #818cf8; }
         .back-link { margin-top: 12px; font-size: 13px; }
         .back-link a { color: #94a3b8; text-decoration: none; font-weight: 500; }
         .back-link a:hover { text-decoration: underline; color: #f1f5f9; }
-        body.light-theme {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
-        }
-        body.light-theme .login-container {
-            background: rgba(255, 255, 255, 0.7);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
-        }
-        body.light-theme .login-container h1 { color: #1a1a2e; }
-        body.light-theme .login-container p { color: #6b7280; }
-        body.light-theme .input-group label { color: #4b5563; }
-        body.light-theme .input-group input {
-            background: rgba(0, 0, 0, 0.04);
-            border-color: rgba(0, 0, 0, 0.08);
-            color: #1a1a2e;
-        }
-        body.light-theme .input-group input:focus { border-color: #d97706; background: rgba(0, 0, 0, 0.06); }
-        body.light-theme .footer-text { color: #9ca3af; }
-        body.light-theme .footer-text span { color: #4f46e5; }
-        body.light-theme .back-link a { color: #6b7280; }
-        body.light-theme .back-link a:hover { color: #1a1a2e; }
-        @media (max-width: 480px) {
-            .login-container { padding: 32px 20px; }
-        }
     </style>
 </head>
 <body>
@@ -119,27 +93,26 @@
 
     <script>
         // ============================================================
-        // 🔥 APNI API URL YAHAN DAALEIN
+        // 🔥 SHEET.BEST API - SIRF USERS SHEET
         // ============================================================
-        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7';
+        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7/0';
 
         const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
-        // ---------- THEME ----------
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-        }
-
         // ============================================================
-        // 1. GET SETTINGS
+        // 1. GET SETTINGS (Pehli row se)
         // ============================================================
         async function getSettings() {
             try {
-                const response = await fetch(`${SHEET_BEST_URL}/settings`);
+                const response = await fetch(SHEET_BEST_URL);
                 const data = await response.json();
                 if (data && data.length > 0) {
-                    return data[0];
+                    const firstRow = data[0];
+                    return {
+                        LoginCode: firstRow.LoginCode || '1234',
+                        AdminCode: firstRow.AdminCode || 'admin123',
+                        AdminName: firstRow.AdminName || 'Sultan'
+                    };
                 }
                 return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
             } catch (e) {
@@ -167,7 +140,6 @@
 
             const settings = await getSettings();
             if (code === settings.AdminCode) {
-                // Admin login successful
                 localStorage.setItem('isAdminLoggedIn', 'true');
                 localStorage.setItem('adminLoginTime', Date.now());
                 
@@ -203,7 +175,7 @@
         });
 
         // ============================================================
-        // 4. AUTO-REDIRECT IF ALREADY LOGGED IN
+        // 4. AUTO-REDIRECT
         // ============================================================
         const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
         const adminLoginTime = parseInt(localStorage.getItem('adminLoginTime') || '0');
