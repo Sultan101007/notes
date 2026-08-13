@@ -15,7 +15,6 @@
             align-items: center;
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             padding: 20px;
-            transition: background 0.3s ease;
         }
         .admin-container {
             width: 100%; max-width: 750px;
@@ -65,8 +64,6 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(129, 140, 248, 0.2); }
         .btn-primary.admin-btn { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; }
         .btn-primary.admin-btn:hover { box-shadow: 0 8px 30px rgba(251, 191, 36, 0.2); }
-        .btn-primary.admin-name-btn { background: linear-gradient(135deg, #34d399, #10b981); color: #1a1a2e; }
-        .btn-primary.admin-name-btn:hover { box-shadow: 0 8px 30px rgba(16, 185, 129, 0.2); }
         
         .btn-danger { padding: 8px 16px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; color: #f87171; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.3s ease; font-family: 'Inter', sans-serif; }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.3); }
@@ -77,9 +74,8 @@
         .users-list { max-height: 280px; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; background: rgba(0, 0, 0, 0.15); }
         .users-list::-webkit-scrollbar { width: 4px; }
         .users-list::-webkit-scrollbar-thumb { background: rgba(129, 140, 248, 0.3); border-radius: 4px; }
-        .user-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); transition: 0.2s ease; }
+        .user-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
         .user-item:last-child { border-bottom: none; }
-        .user-item:hover { background: rgba(255, 255, 255, 0.03); }
         .user-item .user-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .user-item .user-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #818cf8; }
         .user-item .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: rgba(129, 140, 248, 0.15); display: flex; align-items: center; justify-content: center; color: #a5b4fc; font-weight: 700; font-size: 13px; }
@@ -106,53 +102,6 @@
         .refresh-btn { background: rgba(129, 140, 248, 0.1); border: 1px solid rgba(129, 140, 248, 0.15); border-radius: 8px; padding: 6px 12px; color: #a5b4fc; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.3s ease; font-family: 'Inter', sans-serif; }
         .refresh-btn:hover { background: rgba(129, 140, 248, 0.2); }
         .online-count { color: #34d399; font-size: 12px; font-weight: 500; }
-
-        body.light-theme {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
-        }
-        body.light-theme .admin-container {
-            background: rgba(255, 255, 255, 0.7);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
-        }
-        body.light-theme .admin-container h1 { color: #1a1a2e; }
-        body.light-theme .admin-container .subtitle { color: #6b7280; }
-        body.light-theme .code-box { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.06); }
-        body.light-theme .code-box .label { color: #6b7280; }
-        body.light-theme .code-box .label .show-btn:hover { color: #1a1a2e; background: rgba(0, 0, 0, 0.04); }
-        body.light-theme .code-box .value { color: #4f46e5; }
-        body.light-theme .code-box .value.admin-code { color: #d97706; }
-        body.light-theme .code-box .value.hidden { color: #9ca3af; }
-        body.light-theme .admin-name-box { background: rgba(217, 119, 6, 0.06); border-color: rgba(217, 119, 6, 0.12); }
-        body.light-theme .admin-name-box .label { color: #6b7280; }
-        body.light-theme .admin-name-box .value { color: #d97706; }
-        body.light-theme .input-group input { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.08); color: #1a1a2e; }
-        body.light-theme .input-group input::placeholder { color: #9ca3af; }
-        body.light-theme .input-group input:focus { border-color: #4f46e5; background: rgba(0, 0, 0, 0.06); }
-        body.light-theme .input-group input.admin-input:focus { border-color: #d97706; }
-        body.light-theme .input-group input.admin-name-input:focus { border-color: #059669; }
-        body.light-theme .section-title { color: #6b7280; }
-        body.light-theme .users-list { border-color: rgba(0, 0, 0, 0.06); background: rgba(0, 0, 0, 0.03); }
-        body.light-theme .user-item { border-color: rgba(0, 0, 0, 0.04); }
-        body.light-theme .user-item:hover { background: rgba(0, 0, 0, 0.03); }
-        body.light-theme .user-item .user-name { color: #1a1a2e; }
-        body.light-theme .user-item .user-time { color: #9ca3af; }
-        body.light-theme .btn-secondary { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.08); color: #4b5563; }
-        body.light-theme .btn-secondary:hover { background: rgba(0, 0, 0, 0.08); color: #1a1a2e; }
-        body.light-theme .footer-text { color: #9ca3af; }
-        body.light-theme .footer-text span { color: #4f46e5; }
-        body.light-theme .back-row { border-color: rgba(0, 0, 0, 0.06); }
-        body.light-theme .select-all-row .left label { color: #4b5563; }
-        body.light-theme .refresh-btn { background: rgba(79, 70, 229, 0.06); border-color: rgba(79, 70, 229, 0.12); color: #4f46e5; }
-        body.light-theme .refresh-btn:hover { background: rgba(79, 70, 229, 0.12); }
-        @media (max-width: 600px) {
-            .admin-container { padding: 24px 18px; }
-            .code-grid { grid-template-columns: 1fr; }
-            .back-row { flex-direction: column; align-items: stretch; }
-            .select-all-row { flex-direction: column; align-items: stretch; }
-            .select-all-row .right { justify-content: stretch; }
-            .select-all-row .right button { flex: 1; }
-        }
     </style>
 </head>
 <body>
@@ -175,7 +124,7 @@
             <input type="text" class="admin-name-input" id="newAdminName" placeholder="Enter new admin name" maxlength="30" />
             <div class="hint">⚠️ User must be registered first. Changing this will logout current admin</div>
         </div>
-        <button class="btn-primary admin-name-btn" id="changeAdminNameBtn">👑 Change Admin Name</button>
+        <button class="btn-primary" id="changeAdminNameBtn" style="background:linear-gradient(135deg,#34d399,#10b981);color:#1a1a2e;">👑 Change Admin Name</button>
         <div class="message" id="adminNameMessage"></div>
 
         <!-- Current Codes -->
@@ -257,27 +206,38 @@
 
     <script>
         // ============================================================
-        // 🔥 APNI API URL YAHAN DAALEIN
+        // 🔥 SHEET.BEST API - SIRF USERS SHEET
         // ============================================================
-        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7';
+        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7/0';
 
         const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
-        // ---------- THEME ----------
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
+        // ============================================================
+        // 1. GET ALL DATA
+        // ============================================================
+        async function getSheetData() {
+            try {
+                const response = await fetch(SHEET_BEST_URL);
+                return await response.json();
+            } catch (e) {
+                console.error('Error getting data:', e);
+                return [];
+            }
         }
 
         // ============================================================
-        // 1. GET SETTINGS
+        // 2. GET SETTINGS (Pehli row se)
         // ============================================================
         async function getSettings() {
             try {
-                const response = await fetch(`${SHEET_BEST_URL}/settings`);
-                const data = await response.json();
+                const data = await getSheetData();
                 if (data && data.length > 0) {
-                    return data[0];
+                    const firstRow = data[0];
+                    return {
+                        LoginCode: firstRow.LoginCode || '1234',
+                        AdminCode: firstRow.AdminCode || 'admin123',
+                        AdminName: firstRow.AdminName || 'Sultan'
+                    };
                 }
                 return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
             } catch (e) {
@@ -287,45 +247,56 @@
         }
 
         // ============================================================
-        // 2. SAVE SETTINGS
+        // 3. UPDATE SETTINGS (Pehli row update)
         // ============================================================
-        async function saveSettings(settings) {
+        async function updateSettings(settings) {
             try {
-                // First get existing settings to get the ID
-                const response = await fetch(`${SHEET_BEST_URL}/settings`);
-                const data = await response.json();
-                
+                const data = await getSheetData();
                 if (data && data.length > 0) {
-                    // Update existing
-                    const id = data[0].id;
-                    await fetch(`${SHEET_BEST_URL}/settings/${id}`, {
+                    const firstRow = data[0];
+                    // Update first row
+                    await fetch(`${SHEET_BEST_URL}/${firstRow.id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(settings)
+                        body: JSON.stringify({
+                            LoginCode: settings.LoginCode,
+                            AdminCode: settings.AdminCode,
+                            AdminName: settings.AdminName
+                        })
                     });
+                    console.log('✅ Settings updated');
+                    return true;
                 } else {
-                    // Create new
-                    await fetch(`${SHEET_BEST_URL}/settings`, {
+                    // No data exists, create new row
+                    await fetch(SHEET_BEST_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(settings)
+                        body: JSON.stringify({
+                            Name: 'Settings',
+                            LoginTime: new Date().toISOString(),
+                            IsAdmin: 'SYSTEM',
+                            LoginCode: settings.LoginCode,
+                            AdminCode: settings.AdminCode,
+                            AdminName: settings.AdminName
+                        })
                     });
+                    console.log('✅ Settings created');
+                    return true;
                 }
-                console.log('✅ Settings saved to Sheet.best');
-                return true;
             } catch (e) {
-                console.error('Error saving settings:', e);
+                console.error('Error updating settings:', e);
                 return false;
             }
         }
 
         // ============================================================
-        // 3. GET USERS
+        // 4. GET USERS (Saare rows except first)
         // ============================================================
         async function getUsers() {
             try {
-                const response = await fetch(`${SHEET_BEST_URL}/users`);
-                return await response.json();
+                const data = await getSheetData();
+                // Pehli row ko ignore karo (settings hai)
+                return data.slice(1);
             } catch (e) {
                 console.error('Error getting users:', e);
                 return [];
@@ -333,14 +304,14 @@
         }
 
         // ============================================================
-        // 4. UPDATE USER LOGIN TIME (for logout)
+        // 5. UPDATE USER LOGIN TIME (for logout)
         // ============================================================
         async function updateUserLoginTime(name, time) {
             try {
-                const users = await getUsers();
-                const user = users.find(u => u.Name?.toLowerCase() === name.toLowerCase());
+                const data = await getSheetData();
+                const user = data.find(row => row.Name?.toLowerCase() === name.toLowerCase());
                 if (user && user.id) {
-                    await fetch(`${SHEET_BEST_URL}/users/${user.id}`, {
+                    await fetch(`${SHEET_BEST_URL}/${user.id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ LoginTime: time })
@@ -355,7 +326,7 @@
         }
 
         // ============================================================
-        // 5. LOGOUT FUNCTIONS
+        // 6. LOGOUT FUNCTIONS
         // ============================================================
         async function logoutSelectedUsers() {
             const checkboxes = document.querySelectorAll('.user-checkbox:checked');
@@ -395,7 +366,7 @@
             
             for (const user of users) {
                 if (user.id) {
-                    await fetch(`${SHEET_BEST_URL}/users/${user.id}`, {
+                    await fetch(`${SHEET_BEST_URL}/${user.id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ LoginTime: expiredTime })
@@ -412,7 +383,7 @@
         }
 
         // ============================================================
-        // 6. RENDER USERS LIST
+        // 7. RENDER USERS LIST
         // ============================================================
         async function renderUsers() {
             try {
@@ -473,7 +444,7 @@
         }
 
         // ============================================================
-        // 7. SELECT ALL
+        // 8. SELECT ALL
         // ============================================================
         document.getElementById('selectAllUsers').addEventListener('change', function() {
             document.querySelectorAll('.user-checkbox:not(:disabled)').forEach(cb => {
@@ -482,7 +453,7 @@
         });
 
         // ============================================================
-        // 8. REFRESH
+        // 9. REFRESH
         // ============================================================
         document.getElementById('refreshUsersBtn').addEventListener('click', function() {
             renderUsers();
@@ -493,7 +464,7 @@
         });
 
         // ============================================================
-        // 9. CHANGE LOGIN CODE
+        // 10. CHANGE LOGIN CODE
         // ============================================================
         document.getElementById('changeLoginCodeBtn').addEventListener('click', async function() {
             const newCode = document.getElementById('newLoginCode').value.trim();
@@ -514,14 +485,14 @@
 
             const settings = await getSettings();
             settings.LoginCode = newCode;
-            await saveSettings(settings);
+            await updateSettings(settings);
 
             // Logout all users
             const users = await getUsers();
             const expiredTime = new Date(Date.now() - SESSION_DURATION - 10000).toISOString();
             for (const user of users) {
                 if (user.id) {
-                    await fetch(`${SHEET_BEST_URL}/users/${user.id}`, {
+                    await fetch(`${SHEET_BEST_URL}/${user.id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ LoginTime: expiredTime })
@@ -542,7 +513,7 @@
         });
 
         // ============================================================
-        // 10. CHANGE ADMIN CODE
+        // 11. CHANGE ADMIN CODE
         // ============================================================
         document.getElementById('changeAdminCodeBtn').addEventListener('click', async function() {
             const newCode = document.getElementById('newAdminCode').value.trim();
@@ -563,7 +534,7 @@
 
             const settings = await getSettings();
             settings.AdminCode = newCode;
-            await saveSettings(settings);
+            await updateSettings(settings);
 
             messageEl.className = 'message success';
             messageEl.textContent = `✅ Admin code changed to "${newCode}"!`;
@@ -577,7 +548,7 @@
         });
 
         // ============================================================
-        // 11. CHANGE ADMIN NAME
+        // 12. CHANGE ADMIN NAME
         // ============================================================
         document.getElementById('changeAdminNameBtn').addEventListener('click', async function() {
             const newName = document.getElementById('newAdminName').value.trim();
@@ -600,7 +571,7 @@
 
             const settings = await getSettings();
             settings.AdminName = newName;
-            await saveSettings(settings);
+            await updateSettings(settings);
 
             document.getElementById('currentAdminName').textContent = newName;
 
@@ -608,7 +579,6 @@
             messageEl.textContent = `✅ Admin name changed to "${newName}"!`;
             document.getElementById('newAdminName').value = '';
 
-            // Logout admin
             localStorage.removeItem('isAdminLoggedIn');
             localStorage.removeItem('adminLoginTime');
 
@@ -620,7 +590,7 @@
         });
 
         // ============================================================
-        // 12. SHOW/HIDE CODES
+        // 13. SHOW/HIDE CODES
         // ============================================================
         let loginVisible = false;
         let adminVisible = false;
@@ -658,13 +628,13 @@
         });
 
         // ============================================================
-        // 13. EVENT LISTENERS
+        // 14. EVENT LISTENERS
         // ============================================================
         document.getElementById('logoutSelectedBtn').addEventListener('click', logoutSelectedUsers);
         document.getElementById('logoutAllBtn').addEventListener('click', logoutAllUsers);
 
         // ============================================================
-        // 14. SECURITY CHECK
+        // 15. SECURITY CHECK
         // ============================================================
         async function checkAdminAccess() {
             const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
@@ -684,7 +654,7 @@
         }
 
         // ============================================================
-        // 15. INIT
+        // 16. INIT
         // ============================================================
         async function init() {
             await checkAdminAccess();
@@ -694,7 +664,6 @@
             
             renderUsers();
             
-            // Auto-refresh every 5 seconds
             setInterval(renderUsers, 5000);
             
             console.log('🛡️ Sheet.best Admin Panel Active');
