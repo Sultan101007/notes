@@ -166,4 +166,432 @@
         <div class="section-title" style="margin-top:20px;">🛡️ Change Admin Code</div>
         <div class="input-group">
             <label for="newAdminCode">New Admin Code</label>
-            <input type="text" class="admin-input" id="newAdmin
+            <input type="text" class="admin-input" id="newAdminCode" placeholder="Enter new admin code (min 4 characters)" maxlength="20" />
+            <div class="hint">⚠️ Changing this will logout admin</div>
+        </div>
+        <div class="input-group">
+            <label for="confirmAdminCode">Confirm New Admin Code</label>
+            <input type="text" class="admin-input" id="confirmAdminCode" placeholder="Re-enter new admin code" maxlength="20" />
+        </div>
+        <button class="btn-primary admin-btn" id="changeAdminCodeBtn">🛡️ Change Admin Code</button>
+        <div class="message" id="adminCodeMessage"></div>
+
+        <!-- Users List -->
+        <div class="section-title" style="margin-top:24px;">
+            👥 Registered Users (<span id="userCount">0</span>)
+            <span class="online-count" id="onlineCount">🟢 0 online</span>
+            <button class="refresh-btn" id="refreshUsersBtn" style="margin-left:10px;">🔄 Refresh</button>
+        </div>
+
+        <div class="select-all-row">
+            <div class="left">
+                <input type="checkbox" id="selectAllUsers" />
+                <label for="selectAllUsers">Select All</label>
+            </div>
+            <div class="right">
+                <button class="btn-danger" id="logoutSelectedBtn">🚪 Logout Selected</button>
+            </div>
+        </div>
+
+        <div class="users-list" id="usersList">
+            <div class="empty-users">No users registered yet</div>
+        </div>
+
+        <div class="back-row">
+            <a href="main_page.html" class="btn-secondary">← Back to Site</a>
+            <a href="admin_login.html" class="btn-secondary">🔄 Switch Admin</a>
+            <button class="btn-danger" id="logoutAllBtn">🚪 Logout All Users</button>
+        </div>
+
+        <div class="footer-text">— by <span>Sultan</span></div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 🔥 APPS SCRIPT WEB APP URL (Already Added)
+        // ============================================================
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
+
+        const SESSION_DURATION = 24 * 60 * 60 * 1000;
+
+        // ============================================================
+        // 1. GET SETTINGS
+        // ============================================================
+        async function getSettings() {
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getSettings`);
+                const data = await response.json();
+                return data;
+            } catch (e) {
+                console.error('Error getting settings:', e);
+                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
+            }
+        }
+
+        // ============================================================
+        // 2. UPDATE SETTINGS
+        // ============================================================
+        async function updateSettings(loginCode, adminCode, adminName) {
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=updateSettings&loginCode=${loginCode}&adminCode=${adminCode}&adminName=${adminName}`);
+                return await response.json();
+            } catch (e) {
+                console.error('Error updating settings:', e);
+                return { error: e.toString() };
+            }
+        }
+
+        // ============================================================
+        // 3. GET USERS
+        // ============================================================
+        async function getUsers() {
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getUsers`);
+                return await response.json();
+            } catch (e) {
+                console.error('Error getting users:', e);
+                return [];
+            }
+        }
+
+        // ============================================================
+        // 4. LOGOUT USER
+        // ============================================================
+        async function logoutUser(name) {
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=logoutUser&name=${encodeURIComponent(name)}`);
+                return await response.json();
+            } catch (e) {
+                console.error('Error logging out user:', e);
+                return { error: e.toString() };
+            }
+        }
+
+        // ============================================================
+        // 5. RENDER USERS
+        // ============================================================
+        async function renderUsers() {
+            try {
+                const users = await getUsers();
+                const settings = await getSettings();
+                const container = document.getElementById('usersList');
+                const countEl = document.getElementById('userCount');
+                const onlineCountEl = document.getElementById('onlineCount');
+
+                countEl.textContent = users.length;
+
+                let onlineCount = 0;
+                users.forEach(u => {
+                    const loginTime = new Date(u.LoginTime).getTime();
+                    if ((Date.now() - loginTime) < SESSION_DURATION) onlineCount++;
+                });
+                onlineCountEl.textContent = `🟢 ${onlineCount} online`;
+
+                if (users.length === 0) {
+                    container.innerHTML = '<div class="empty-users">No users registered yet</div>';
+                    return;
+                }
+
+                let html = '';
+                users.forEach((user) => {
+                    const isAdmin = user.Name?.toLowerCase() === settings.AdminName?.toLowerCase();
+                    const initial = user.Name?.charAt(0).toUpperCase() || '?';
+                    const time = user.LoginTime ? new Date(user.LoginTime).toLocaleString() : 'Never';
+                    const isLoggedIn = user.LoginTime ? (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION : false;
+
+                    html += `
+                        <div class="user-item">
+                            <div class="user-left">
+                                <input type="checkbox" class="user-checkbox" data-name="${user.Name}" ${isAdmin ? 'disabled' : ''} />
+                                <div class="user-avatar">${initial}</div>
+                                <span class="user-name">${user.Name}</span>
+                                ${isAdmin ? '<span class="user-badge admin">👑 Admin</span>' : ''}
+                                <span class="user-status ${isLoggedIn ? '' : 'logged-out'}">${isLoggedIn ? '🟢 Online' : '🔴 Offline'}</span>
+                            </div>
+                            <div class="user-actions">
+                                <span class="user-time">${time}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+                const allCheckboxes = document.querySelectorAll('.user-checkbox:not(:disabled)');
+                const checkedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
+                const selectAll = document.getElementById('selectAllUsers');
+                if (allCheckboxes.length > 0) {
+                    selectAll.checked = allCheckboxes.length === checkedCheckboxes.length;
+                }
+            } catch (e) {
+                console.error('Error rendering users:', e);
+            }
+        }
+
+        // ============================================================
+        // 6. SELECT ALL
+        // ============================================================
+        document.getElementById('selectAllUsers').addEventListener('change', function() {
+            document.querySelectorAll('.user-checkbox:not(:disabled)').forEach(cb => {
+                cb.checked = this.checked;
+            });
+        });
+
+        // ============================================================
+        // 7. REFRESH
+        // ============================================================
+        document.getElementById('refreshUsersBtn').addEventListener('click', function() {
+            renderUsers();
+            this.textContent = '✅ Refreshed!';
+            setTimeout(() => {
+                this.textContent = '🔄 Refresh';
+            }, 2000);
+        });
+
+        // ============================================================
+        // 8. CHANGE LOGIN CODE
+        // ============================================================
+        document.getElementById('changeLoginCodeBtn').addEventListener('click', async function() {
+            const newCode = document.getElementById('newLoginCode').value.trim();
+            const confirmCode = document.getElementById('confirmLoginCode').value.trim();
+            const messageEl = document.getElementById('loginCodeMessage');
+
+            if (!newCode || newCode.length < 4) {
+                messageEl.className = 'message error';
+                messageEl.textContent = '⚠️ Code must be at least 4 characters long.';
+                return;
+            }
+
+            if (newCode !== confirmCode) {
+                messageEl.className = 'message error';
+                messageEl.textContent = '❌ Codes do not match.';
+                return;
+            }
+
+            const settings = await getSettings();
+            settings.LoginCode = newCode;
+            await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName);
+
+            // Logout all users
+            const users = await getUsers();
+            for (const user of users) {
+                await logoutUser(user.Name);
+            }
+
+            messageEl.className = 'message success';
+            messageEl.textContent = `✅ Login code changed to "${newCode}"! All users logged out.`;
+            document.getElementById('newLoginCode').value = '';
+            document.getElementById('confirmLoginCode').value = '';
+
+            renderUsers();
+            setTimeout(() => {
+                messageEl.className = 'message';
+                messageEl.textContent = '';
+            }, 4000);
+        });
+
+        // ============================================================
+        // 9. CHANGE ADMIN CODE
+        // ============================================================
+        document.getElementById('changeAdminCodeBtn').addEventListener('click', async function() {
+            const newCode = document.getElementById('newAdminCode').value.trim();
+            const confirmCode = document.getElementById('confirmAdminCode').value.trim();
+            const messageEl = document.getElementById('adminCodeMessage');
+
+            if (!newCode || newCode.length < 4) {
+                messageEl.className = 'message error';
+                messageEl.textContent = '⚠️ Code must be at least 4 characters long.';
+                return;
+            }
+
+            if (newCode !== confirmCode) {
+                messageEl.className = 'message error';
+                messageEl.textContent = '❌ Codes do not match.';
+                return;
+            }
+
+            const settings = await getSettings();
+            settings.AdminCode = newCode;
+            await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName);
+
+            messageEl.className = 'message success';
+            messageEl.textContent = `✅ Admin code changed to "${newCode}"!`;
+            document.getElementById('newAdminCode').value = '';
+            document.getElementById('confirmAdminCode').value = '';
+
+            setTimeout(() => {
+                messageEl.className = 'message';
+                messageEl.textContent = '';
+            }, 4000);
+        });
+
+        // ============================================================
+        // 10. CHANGE ADMIN NAME
+        // ============================================================
+        document.getElementById('changeAdminNameBtn').addEventListener('click', async function() {
+            const newName = document.getElementById('newAdminName').value.trim();
+            const messageEl = document.getElementById('adminNameMessage');
+
+            if (!newName || newName.length < 2) {
+                messageEl.className = 'message error';
+                messageEl.textContent = '⚠️ Name must be at least 2 characters.';
+                return;
+            }
+
+            const users = await getUsers();
+            const userExists = users.some(u => u.Name?.toLowerCase() === newName.toLowerCase());
+
+            if (!userExists) {
+                messageEl.className = 'message error';
+                messageEl.textContent = `❌ User "${newName}" does not exist.`;
+                return;
+            }
+
+            const settings = await getSettings();
+            settings.AdminName = newName;
+            await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName);
+
+            document.getElementById('currentAdminName').textContent = newName;
+
+            messageEl.className = 'message success';
+            messageEl.textContent = `✅ Admin name changed to "${newName}"!`;
+            document.getElementById('newAdminName').value = '';
+
+            // Logout admin
+            localStorage.removeItem('isAdminLoggedIn');
+            localStorage.removeItem('adminLoginTime');
+
+            setTimeout(() => {
+                messageEl.className = 'message';
+                messageEl.textContent = '';
+                window.location.href = 'admin_login.html';
+            }, 2000);
+        });
+
+        // ============================================================
+        // 11. SHOW/HIDE CODES
+        // ============================================================
+        let loginVisible = false;
+        let adminVisible = false;
+
+        document.getElementById('showLoginCodeBtn').addEventListener('click', async function() {
+            loginVisible = !loginVisible;
+            const displayEl = document.getElementById('currentLoginCode');
+            
+            if (loginVisible) {
+                const settings = await getSettings();
+                displayEl.textContent = settings.LoginCode;
+                displayEl.className = 'value';
+                this.textContent = '🙈';
+            } else {
+                displayEl.textContent = '••••••••';
+                displayEl.className = 'value hidden';
+                this.textContent = '👁️';
+            }
+        });
+
+        document.getElementById('showAdminCodeBtn').addEventListener('click', async function() {
+            adminVisible = !adminVisible;
+            const displayEl = document.getElementById('currentAdminCode');
+            
+            if (adminVisible) {
+                const settings = await getSettings();
+                displayEl.textContent = settings.AdminCode;
+                displayEl.className = 'value admin-code';
+                this.textContent = '🙈';
+            } else {
+                displayEl.textContent = '••••••••';
+                displayEl.className = 'value admin-code hidden';
+                this.textContent = '👁️';
+            }
+        });
+
+        // ============================================================
+        // 12. LOGOUT FUNCTIONS
+        // ============================================================
+        document.getElementById('logoutSelectedBtn').addEventListener('click', async function() {
+            const checkboxes = document.querySelectorAll('.user-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('⚠️ Please select at least one user.');
+                return;
+            }
+            if (!confirm(`Logout ${checkboxes.length} selected user(s)?`)) return;
+
+            const selectedNames = Array.from(checkboxes).map(cb => cb.dataset.name);
+            
+            for (const name of selectedNames) {
+                await logoutUser(name);
+            }
+
+            const currentUser = localStorage.getItem('userName');
+            if (selectedNames.includes(currentUser)) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('loginTime');
+                alert(`✅ ${selectedNames.length} user(s) logged out. You have been logged out as well.`);
+                window.location.href = 'login.html';
+                return;
+            }
+
+            renderUsers();
+            alert(`✅ ${selectedNames.length} user(s) logged out successfully.`);
+        });
+
+        document.getElementById('logoutAllBtn').addEventListener('click', async function() {
+            if (!confirm('⚠️ Are you sure you want to logout ALL users?')) return;
+            
+            const users = await getUsers();
+            for (const user of users) {
+                await logoutUser(user.Name);
+            }
+
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('loginTime');
+            
+            renderUsers();
+            alert('✅ All users have been logged out successfully.');
+            window.location.href = 'login.html';
+        });
+
+        // ============================================================
+        // 13. SECURITY CHECK
+        // ============================================================
+        async function checkAdminAccess() {
+            const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
+            const adminLoginTime = parseInt(localStorage.getItem('adminLoginTime') || '0');
+            const loggedInUserName = localStorage.getItem('userName') || '';
+
+            const settings = await getSettings();
+            const isAuthorized = isAdminLoggedIn && 
+                                 (Date.now() - adminLoginTime) < SESSION_DURATION &&
+                                 loggedInUserName.toLowerCase() === settings.AdminName?.toLowerCase();
+
+            if (!isAuthorized) {
+                localStorage.removeItem('isAdminLoggedIn');
+                localStorage.removeItem('adminLoginTime');
+                window.location.href = 'admin_login.html';
+            }
+        }
+
+        // ============================================================
+        // 14. INIT
+        // ============================================================
+        async function init() {
+            await checkAdminAccess();
+            
+            const settings = await getSettings();
+            document.getElementById('currentAdminName').textContent = settings.AdminName || 'Sultan';
+            
+            renderUsers();
+            
+            // Auto-refresh every 5 seconds
+            setInterval(renderUsers, 5000);
+            
+            console.log('🛡️ Admin Panel Active');
+            console.log('👑 Admin Name:', settings.AdminName);
+        }
+
+        init();
+    </script>
+
+</body>
+</html>
