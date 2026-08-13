@@ -93,28 +93,20 @@
 
     <script>
         // ============================================================
-        // 🔥 SHEET.BEST API - SIRF USERS SHEET
+        // 🔥 APPS SCRIPT WEB APP URL (Already Added)
         // ============================================================
-        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7/0';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
 
         const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
         // ============================================================
-        // 1. GET SETTINGS (Pehli row se)
+        // 1. GET SETTINGS
         // ============================================================
         async function getSettings() {
             try {
-                const response = await fetch(SHEET_BEST_URL);
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getSettings`);
                 const data = await response.json();
-                if (data && data.length > 0) {
-                    const firstRow = data[0];
-                    return {
-                        LoginCode: firstRow.LoginCode || '1234',
-                        AdminCode: firstRow.AdminCode || 'admin123',
-                        AdminName: firstRow.AdminName || 'Sultan'
-                    };
-                }
-                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
+                return data;
             } catch (e) {
                 console.error('Error getting settings:', e);
                 return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
