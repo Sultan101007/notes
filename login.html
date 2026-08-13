@@ -4,16 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Access Required</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -24,209 +17,78 @@
             padding: 20px;
             transition: background 0.3s ease;
         }
-
         .login-container {
-            width: 100%;
-            max-width: 440px;
+            width: 100%; max-width: 440px;
             background: rgba(30, 30, 50, 0.85);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-radius: 32px;
             padding: 48px 36px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
             text-align: center;
         }
-
-        .lock-icon {
-            font-size: 56px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .login-container h1 {
-            font-size: 28px;
-            font-weight: 800;
-            color: #f1f5f9;
-            margin-bottom: 8px;
-        }
-
-        .login-container p {
-            color: #94a3b8;
-            font-size: 15px;
-            margin-bottom: 24px;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            color: #94a3b8;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
+        .lock-icon { font-size: 56px; margin-bottom: 16px; display: block; }
+        .login-container h1 { font-size: 28px; font-weight: 800; color: #f1f5f9; margin-bottom: 8px; }
+        .login-container p { color: #94a3b8; font-size: 15px; margin-bottom: 24px; }
+        .input-group { position: relative; margin-bottom: 16px; text-align: left; }
+        .input-group label { display: block; color: #94a3b8; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
         .input-group input {
-            width: 100%;
-            padding: 14px 18px;
+            width: 100%; padding: 14px 18px;
             background: rgba(255, 255, 255, 0.06);
             border: 2px solid rgba(255, 255, 255, 0.08);
             border-radius: 14px;
-            color: #f1f5f9;
-            font-size: 16px;
+            color: #f1f5f9; font-size: 16px;
             font-family: 'Inter', sans-serif;
-            transition: 0.3s ease;
-            outline: none;
+            transition: 0.3s ease; outline: none;
         }
-
-        .input-group input::placeholder {
-            color: #475569;
-            font-weight: 400;
-            font-size: 14px;
-        }
-
-        .input-group input:focus {
-            border-color: #818cf8;
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 30px rgba(129, 140, 248, 0.08);
-        }
-
+        .input-group input:focus { border-color: #818cf8; background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 30px rgba(129, 140, 248, 0.08); }
         .input-group .toggle-visibility {
-            position: absolute;
-            right: 14px;
-            bottom: 14px;
-            background: none;
-            border: none;
-            color: #64748b;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 4px;
+            position: absolute; right: 14px; bottom: 14px;
+            background: none; border: none;
+            color: #64748b; font-size: 18px;
+            cursor: pointer; padding: 4px;
         }
-
-        .input-group .toggle-visibility:hover {
-            color: #94a3b8;
-        }
-
+        .input-group .toggle-visibility:hover { color: #94a3b8; }
         .login-btn {
-            width: 100%;
-            padding: 16px;
+            width: 100%; padding: 16px;
             background: linear-gradient(135deg, #818cf8, #7c3aed);
-            border: none;
-            border-radius: 14px;
-            color: white;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            margin-top: 8px;
+            border: none; border-radius: 14px;
+            color: white; font-size: 17px; font-weight: 700;
+            cursor: pointer; transition: 0.3s ease;
+            font-family: 'Inter', sans-serif; margin-top: 8px;
         }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(129, 140, 248, 0.25);
-        }
-
-        .login-btn:active {
-            transform: scale(0.97);
-        }
-
-        .error-msg {
-            color: #f87171;
-            font-size: 14px;
-            margin-top: 14px;
-            min-height: 24px;
-            display: none;
-        }
-
-        .error-msg.show {
-            display: block;
-        }
-
-        .footer-text {
-            margin-top: 24px;
-            color: #475569;
-            font-size: 12px;
-            letter-spacing: 0.3px;
-        }
-
-        .footer-text span {
-            color: #818cf8;
-        }
-
-        .admin-link {
-            margin-top: 12px;
-            font-size: 13px;
-        }
-
-        .admin-link a {
-            color: #818cf8;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .admin-link a:hover {
-            text-decoration: underline;
-        }
-
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(129, 140, 248, 0.25); }
+        .login-btn:active { transform: scale(0.97); }
+        .error-msg { color: #f87171; font-size: 14px; margin-top: 14px; min-height: 24px; display: none; }
+        .error-msg.show { display: block; }
+        .footer-text { margin-top: 24px; color: #475569; font-size: 12px; letter-spacing: 0.3px; }
+        .footer-text span { color: #818cf8; }
+        .admin-link { margin-top: 12px; font-size: 13px; }
+        .admin-link a { color: #818cf8; text-decoration: none; font-weight: 600; }
+        .admin-link a:hover { text-decoration: underline; }
         body.light-theme {
             background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
         }
-
         body.light-theme .login-container {
             background: rgba(255, 255, 255, 0.7);
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
         }
-
-        body.light-theme .login-container h1 {
-            color: #1a1a2e;
-        }
-
-        body.light-theme .login-container p {
-            color: #6b7280;
-        }
-
-        body.light-theme .input-group label {
-            color: #4b5563;
-        }
-
+        body.light-theme .login-container h1 { color: #1a1a2e; }
+        body.light-theme .login-container p { color: #6b7280; }
+        body.light-theme .input-group label { color: #4b5563; }
         body.light-theme .input-group input {
             background: rgba(0, 0, 0, 0.04);
             border-color: rgba(0, 0, 0, 0.08);
             color: #1a1a2e;
         }
-
-        body.light-theme .input-group input::placeholder {
-            color: #9ca3af;
-        }
-
-        body.light-theme .input-group input:focus {
-            border-color: #4f46e5;
-            background: rgba(0, 0, 0, 0.06);
-        }
-
-        body.light-theme .footer-text {
-            color: #9ca3af;
-        }
-
-        body.light-theme .footer-text span {
-            color: #4f46e5;
-        }
-
-        body.light-theme .admin-link a {
-            color: #4f46e5;
-        }
-
+        body.light-theme .input-group input::placeholder { color: #9ca3af; }
+        body.light-theme .input-group input:focus { border-color: #4f46e5; background: rgba(0, 0, 0, 0.06); }
+        body.light-theme .footer-text { color: #9ca3af; }
+        body.light-theme .footer-text span { color: #4f46e5; }
+        body.light-theme .admin-link a { color: #4f46e5; }
         @media (max-width: 480px) {
-            .login-container {
-                padding: 32px 20px;
-            }
+            .login-container { padding: 32px 20px; }
         }
     </style>
 </head>
@@ -256,12 +118,17 @@
             <a href="admin_login.html">🛡️ Admin Login</a>
         </div>
 
-        <div class="footer-text">
-            — by <span>Sultan</span>
-        </div>
+        <div class="footer-text">— by <span>Sultan</span></div>
     </div>
 
     <script>
+        // ============================================================
+        // 🔥 APNI API URL YAHAN DAALEIN
+        // ============================================================
+        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7';
+
+        const SESSION_DURATION = 24 * 60 * 60 * 1000;
+
         // ---------- THEME ----------
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
@@ -269,107 +136,75 @@
         }
 
         // ============================================================
-        // 1. STORAGE KEYS
+        // 1. GET SETTINGS (Login Code, Admin Code, Admin Name)
         // ============================================================
-        const LOGIN_CODE_KEY = 'loginCodeHash';
-        const ADMIN_NAME_KEY = 'adminName';
-        const USERS_KEY = 'registeredUsers';
-
-        const DEFAULT_LOGIN_HASH = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4';
-        const DEFAULT_ADMIN_NAME = 'Sultan';
-
-        // ============================================================
-        // 2. GET STORED VALUES
-        // ============================================================
-        function getStoredLoginHash() {
-            return localStorage.getItem(LOGIN_CODE_KEY) || DEFAULT_LOGIN_HASH;
-        }
-
-        function getStoredAdminName() {
-            return localStorage.getItem(ADMIN_NAME_KEY) || DEFAULT_ADMIN_NAME;
-        }
-
-        // ============================================================
-        // 3. HASH FUNCTION
-        // ============================================================
-        async function hashCode(code) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(code);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // ============================================================
-        // 4. USERS MANAGEMENT - FIXED
-        // ============================================================
-        function getUsers() {
+        async function getSettings() {
             try {
-                const data = localStorage.getItem(USERS_KEY);
-                if (!data) {
-                    console.log('ℹ️ No users found, returning empty array');
-                    return [];
+                const response = await fetch(`${SHEET_BEST_URL}/settings`);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    return data[0];
                 }
-                const users = JSON.parse(data);
-                console.log('👥 Total users in storage:', users.length);
-                return users;
+                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
             } catch (e) {
-                console.error('❌ Error reading users:', e);
+                console.error('Error getting settings:', e);
+                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
+            }
+        }
+
+        // ============================================================
+        // 2. GET USERS
+        // ============================================================
+        async function getUsers() {
+            try {
+                const response = await fetch(`${SHEET_BEST_URL}/users`);
+                return await response.json();
+            } catch (e) {
+                console.error('Error getting users:', e);
                 return [];
             }
         }
 
-        function saveUsers(users) {
+        // ============================================================
+        // 3. ADD/UPDATE USER
+        // ============================================================
+        async function addUser(name) {
             try {
-                localStorage.setItem(USERS_KEY, JSON.stringify(users));
-                console.log('✅ Users saved successfully. Total:', users.length);
-                // Trigger storage event for other tabs/windows
-                window.dispatchEvent(new Event('storage'));
+                const users = await getUsers();
+                const existingUser = users.find(u => u.Name?.toLowerCase() === name.toLowerCase());
+
+                if (!existingUser) {
+                    // New user - POST
+                    await fetch(`${SHEET_BEST_URL}/users`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            Name: name.trim(),
+                            LoginTime: new Date().toISOString(),
+                            IsAdmin: 'FALSE'
+                        })
+                    });
+                    console.log('✅ New user added:', name);
+                } else {
+                    // Existing user - UPDATE login time
+                    await fetch(`${SHEET_BEST_URL}/users/${existingUser.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            LoginTime: new Date().toISOString()
+                        })
+                    });
+                    console.log('🔄 User login time updated:', name);
+                }
                 return true;
             } catch (e) {
-                console.error('❌ Error saving users:', e);
-                return false;
-            }
-        }
-
-        function addUser(name) {
-            const users = getUsers();
-            const exists = users.some(u => u.name.toLowerCase() === name.toLowerCase());
-            
-            if (!exists) {
-                const newUser = {
-                    name: name.trim(),
-                    loginTime: Date.now()
-                };
-                users.push(newUser);
-                saveUsers(users);
-                console.log('✅ New user added:', name);
-                console.log('📋 Updated users list:', users);
-                return true;
-            } else {
-                console.log('ℹ️ User already exists:', name);
-                // Update login time
-                users.forEach(u => {
-                    if (u.name.toLowerCase() === name.toLowerCase()) {
-                        u.loginTime = Date.now();
-                    }
-                });
-                saveUsers(users);
+                console.error('Error adding user:', e);
                 return false;
             }
         }
 
         // ============================================================
-        // 5. VERIFY LOGIN CODE
-        // ============================================================
-        async function verifyLoginCode(inputCode) {
-            const hashedInput = await hashCode(inputCode);
-            const storedHash = getStoredLoginHash();
-            return hashedInput === storedHash;
-        }
-
-        // ============================================================
-        // 6. LOGIN
+        // 4. LOGIN
         // ============================================================
         const loginBtn = document.getElementById('loginBtn');
         const nameInput = document.getElementById('userName');
@@ -394,8 +229,9 @@
                 return;
             }
 
-            const isValidCode = await verifyLoginCode(code);
-            if (!isValidCode) {
+            // Verify code from Sheet.best
+            const settings = await getSettings();
+            if (code !== settings.LoginCode) {
                 errorMsg.textContent = '❌ Invalid access code. Please try again.';
                 errorMsg.classList.add('show');
                 accessInput.value = '';
@@ -406,16 +242,16 @@
                 return;
             }
 
-            // ✅ Add user
-            addUser(name);
+            // Add/Update user
+            await addUser(name);
 
             // Login successful
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('loginTime', Date.now());
             localStorage.setItem('userName', name);
 
-            const adminName = getStoredAdminName();
-            if (name.toLowerCase() === adminName.toLowerCase()) {
+            // Check if admin
+            if (name.toLowerCase() === settings.AdminName?.toLowerCase()) {
                 localStorage.setItem('isAdmin', 'true');
                 console.log('👑 Admin logged in:', name);
             } else {
@@ -439,7 +275,7 @@
         });
 
         // ============================================================
-        // 7. TOGGLE VISIBILITY
+        // 5. TOGGLE VISIBILITY
         // ============================================================
         const toggleBtn = document.getElementById('toggleVisibility');
         let isVisible = false;
@@ -451,29 +287,20 @@
         });
 
         // ============================================================
-        // 8. AUTO-LOGIN CHECK
+        // 6. AUTO-LOGIN CHECK
         // ============================================================
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const loginTimeCheck = parseInt(localStorage.getItem('loginTime') || '0');
-        const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
         if (isLoggedIn && (Date.now() - loginTimeCheck) < SESSION_DURATION) {
             const userName = localStorage.getItem('userName');
             if (userName) {
                 window.location.href = 'main_page.html';
-            } else {
-                localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('loginTime');
             }
-        } else if (isLoggedIn) {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('loginTime');
         }
 
-        console.log('🔐 Login System Active');
+        console.log('🔐 Sheet.best Login System Active');
         console.log('📌 Default Login Code: 1234');
-        console.log('👑 Admin Name: ' + getStoredAdminName());
-        console.log('🛡️ Admin Login: Click "Admin Login" link');
     </script>
 
 </body>
