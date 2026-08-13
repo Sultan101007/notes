@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(30, 30, 50, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 48px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .shield-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .login-container h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+
+        .login-container p {
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: #f1f5f9;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s ease;
+            outline: none;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        .input-group input::placeholder {
+            color: #475569;
+            font-weight: 400;
+            font-size: 14px;
+            letter-spacing: 0px;
+        }
+
+        .input-group input:focus {
+            border-color: #fbbf24;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.08);
+        }
+
+        .input-group .toggle-visibility {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .input-group .toggle-visibility:hover {
+            color: #94a3b8;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: none;
+            border-radius: 14px;
+            color: #1a1a2e;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(251, 191, 36, 0.25);
+        }
+
+        .login-btn:active {
+            transform: scale(0.97);
+        }
+
+        .error-msg {
+            color: #f87171;
+            font-size: 14px;
+            margin-top: 14px;
+            min-height: 24px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        .footer-text {
+            margin-top: 24px;
+            color: #475569;
+            font-size: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-text span {
+            color: #818cf8;
+        }
+
+        .back-link {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .back-link a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+            color: #f1f5f9;
+        }
+
+        body.light-theme {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
+        }
+
+        body.light-theme .login-container {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
+        }
+
+        body.light-theme .login-container h1 {
+            color: #1a1a2e;
+        }
+
+        body.light-theme .login-container p {
+            color: #6b7280;
+        }
+
+        body.light-theme .input-group label {
+            color: #4b5563;
+        }
+
+        body.light-theme .input-group input {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: #1a1a2e;
+        }
+
+        body.light-theme .input-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        body.light-theme .input-group input:focus {
+            border-color: #d97706;
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-theme .footer-text {
+            color: #9ca3af;
+        }
+
+        body.light-theme .footer-text span {
+            color: #4f46e5;
+        }
+
+        body.light-theme .back-link a {
+            color: #6b7280;
+        }
+
+        body.light-theme .back-link a:hover {
+            color: #1a1a2e;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <span class="shield-icon">🛡️</span>
+        <h1>Admin Login</h1>
+        <p>Enter your admin code to access panel</p>
+
+        <div class="input-group">
+            <label for="adminCode">🔑 Admin Code</label>
+            <input type="password" id="adminCode" placeholder="Enter admin code" maxlength="20" autofocus />
+            <button class="toggle-visibility" id="toggleVisibility" type="button">👁️</button>
+        </div>
+
+        <button class="login-btn" id="loginBtn">🛡️ Unlock Admin Panel</button>
+
+        <div class="error-msg" id="errorMsg">❌ Invalid admin code. Please try again.</div>
+
+        <div class="back-link">
+            <a href="login.html">← Back to User Login</a>
+        </div>
+
+        <div class="footer-text">
+            — by <span>Sultan</span>
+        </div>
+    </div>
+
+    <script>
+        // ---------- THEME ----------
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+        }
+
+        // ============================================================
+        // 1. STORAGE KEYS
+        // ============================================================
+        const ADMIN_CODE_KEY = 'adminCodeHash';
+
+        // Default admin code: "admin123" ka CORRECT HASH
+        const DEFAULT_ADMIN_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
+
+        // ============================================================
+        // 2. GET STORED ADMIN CODE HASH
+        // ============================================================
+        function getStoredAdminHash() {
+            return localStorage.getItem(ADMIN_CODE_KEY) || DEFAULT_ADMIN_HASH;
+        }
+
+        // ============================================================
+        // 3. HASH FUNCTION
+        // ============================================================
+        async function hashCode(code) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(code);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ============================================================
+        // 4. VERIFY ADMIN CODE
+        // ============================================================
+        async function verifyAdminCode(inputCode) {
+            const hashedInput = await hashCode(inputCode);
+            const storedHash = getStoredAdminHash();
+            return hashedInput === storedHash;
+        }
+
+        // ============================================================
+        // 5. LOGIN
+        // ============================================================
+        const loginBtn = document.getElementById('loginBtn');
+        const adminInput = document.getElementById('adminCode');
+        const errorMsg = document.getElementById('errorMsg');
+
+        async function attemptLogin() {
+            const code = adminInput.value.trim();
+
+            if (!code) {
+                errorMsg.textContent = '⚠️ Please enter the admin code.';
+                errorMsg.classList.add('show');
+                adminInput.focus();
+                return;
+            }
+
+            const isValid = await verifyAdminCode(code);
+            if (isValid) {
+                localStorage.setItem('isAdminLoggedIn', 'true');
+                localStorage.setItem('adminLoginTime', Date.now());
+                
+                adminInput.value = '';
+                
+                window.location.href = 'admin_panel.html';
+            } else {
+                errorMsg.textContent = '❌ Invalid admin code. Please try again.';
+                errorMsg.classList.add('show');
+                adminInput.value = '';
+                adminInput.focus();
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        loginBtn.addEventListener('click', attemptLogin);
+        adminInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') attemptLogin();
+        });
+
+        // ============================================================
+        // 6. TOGGLE VISIBILITY
+        // ============================================================
+        const toggleBtn = document.getElementById('toggleVisibility');
+        let isVisible = false;
+
+        toggleBtn.addEventListener('click', () => {
+            isVisible = !isVisible;
+            adminInput.type = isVisible ? 'text' : 'password';
+            toggleBtn.textContent = isVisible ? '🙈' : '👁️';
+        });
+
+        // ============================================================
+        // 7. AUTO-REDIRECT IF ALREADY LOGGED IN
+        // ============================================================
+        const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
+        const adminLoginTime = parseInt(localStorage.getItem('adminLoginTime') || '0');
+        const SESSION_DURATION = 24 * 60 * 60 * 1000;
+
+        if (isAdminLoggedIn && (Date.now() - adminLoginTime) < SESSION_DURATION) {
+            window.location.href = 'admin_panel.html';
+        }
+
+        console.log('🛡️ Admin Login System Active');
+        console.log('📌 Default Admin Code: admin123');
+    </script>
+
+</body>
+</html>
