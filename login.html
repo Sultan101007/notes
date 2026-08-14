@@ -96,139 +96,52 @@
     </div>
 
     <script>
-        // ============================================================
-        // 🔥 APPS SCRIPT WEB APP URL (Already Added)
-        // ============================================================
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
 
-        const SESSION_DURATION = 24 * 60 * 60 * 1000;
+async function getSettings() {
+    const response = await fetch(APPS_SCRIPT_URL + '?action=getSettings');
+    return await response.json();
+}
 
-        // ============================================================
-        // 1. GET SETTINGS
-        // ============================================================
-        async function getSettings() {
-            try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=getSettings`);
-                const data = await response.json();
-                console.log('📋 Settings:', data);
-                return data;
-            } catch (e) {
-                console.error('Error getting settings:', e);
-                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
-            }
-        }
+async function login() {
+    const name = document.getElementById('userName').value;
+    const code = document.getElementById('accessCode').value;
+    const errorMsg = document.getElementById('errorMsg');
 
-        // ============================================================
-        // 2. ADD USER
-        // ============================================================
-        async function addUser(name) {
-            try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=addUser&name=${encodeURIComponent(name)}`);
-                const data = await response.json();
-                console.log('✅ Add user response:', data);
-                return data;
-            } catch (e) {
-                console.error('Error adding user:', e);
-                return { error: e.toString() };
-            }
-        }
+    if (!name || !code) {
+        errorMsg.textContent = '⚠️ Please fill all fields.';
+        errorMsg.style.display = 'block';
+        return;
+    }
 
-        // ============================================================
-        // 3. LOGIN
-        // ============================================================
-        const loginBtn = document.getElementById('loginBtn');
-        const nameInput = document.getElementById('userName');
-        const accessInput = document.getElementById('accessCode');
-        const errorMsg = document.getElementById('errorMsg');
-
-        async function attemptLogin() {
-            const name = nameInput.value.trim();
-            const code = accessInput.value.trim();
-
-            if (!name) {
-                errorMsg.textContent = '⚠️ Please enter your name.';
-                errorMsg.classList.add('show');
-                nameInput.focus();
-                return;
-            }
-
-            if (!code) {
-                errorMsg.textContent = '⚠️ Please enter the access code.';
-                errorMsg.classList.add('show');
-                accessInput.focus();
-                return;
-            }
-
-            const settings = await getSettings();
-            
-            if (code !== settings.LoginCode) {
-                errorMsg.textContent = '❌ Invalid access code. Please try again.';
-                errorMsg.classList.add('show');
-                accessInput.value = '';
-                accessInput.focus();
-                setTimeout(() => {
-                    errorMsg.classList.remove('show');
-                }, 3000);
-                return;
-            }
-
-            // ✅ Add user to sheet
-            await addUser(name);
-
-            // Login successful
+    try {
+        const settings = await getSettings();
+        
+        if (code === settings.LoginCode) {
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('loginTime', Date.now());
             localStorage.setItem('userName', name);
-
-            if (name.toLowerCase() === settings.AdminName?.toLowerCase()) {
+            localStorage.setItem('loginTime', Date.now());
+            
+            if (name.toLowerCase() === settings.AdminName.toLowerCase()) {
                 localStorage.setItem('isAdmin', 'true');
-                console.log('👑 Admin logged in:', name);
-            } else {
-                localStorage.setItem('isAdmin', 'false');
-                console.log('👤 User logged in:', name);
             }
-
-            nameInput.value = '';
-            accessInput.value = '';
-
+            
             window.location.href = 'main_page.html';
+        } else {
+            errorMsg.textContent = '❌ Invalid code. Please try again.';
+            errorMsg.style.display = 'block';
         }
+    } catch (e) {
+        errorMsg.textContent = '❌ Error: ' + e.message;
+        errorMsg.style.display = 'block';
+    }
+}
 
-        loginBtn.addEventListener('click', attemptLogin);
-        nameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') accessInput.focus();
-        });
-        accessInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') attemptLogin();
-        });
-
-        // ============================================================
-        // 4. TOGGLE VISIBILITY
-        // ============================================================
-        const toggleBtn = document.getElementById('toggleVisibility');
-        let isVisible = false;
-
-        toggleBtn.addEventListener('click', () => {
-            isVisible = !isVisible;
-            accessInput.type = isVisible ? 'text' : 'password';
-            toggleBtn.textContent = isVisible ? '🙈' : '👁️';
-        });
-
-        // ============================================================
-        // 5. AUTO-LOGIN CHECK
-        // ============================================================
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        const loginTimeCheck = parseInt(localStorage.getItem('loginTime') || '0');
-
-        if (isLoggedIn && (Date.now() - loginTimeCheck) < SESSION_DURATION) {
-            const userName = localStorage.getItem('userName');
-            if (userName) {
-                window.location.href = 'main_page.html';
-            }
-        }
-
-        console.log('🔐 Google Apps Script Login System Active');
-        console.log('📌 Default Login Code: 1234');
+// Event listeners
+document.getElementById('loginBtn').addEventListener('click', login);
+document.getElementById('accessCode').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') login();
+});
     </script>
 
 </body>
