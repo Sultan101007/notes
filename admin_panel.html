@@ -279,64 +279,72 @@
         // ============================================================
         // 5. RENDER USERS
         // ============================================================
-        async function renderUsers() {
-            try {
-                const users = await getUsers();
-                const settings = await getSettings();
-                const container = document.getElementById('usersList');
-                const countEl = document.getElementById('userCount');
-                const onlineCountEl = document.getElementById('onlineCount');
+async function renderUsers() {
+    try {
+        const users = await getUsers();
+        const settings = await getSettings();
+        const container = document.getElementById('usersList');
+        const countEl = document.getElementById('userCount');
+        const onlineCountEl = document.getElementById('onlineCount');
 
-                countEl.textContent = users.length;
-
-                let onlineCount = 0;
-                users.forEach(u => {
-                    const loginTime = new Date(u.LoginTime).getTime();
-                    if ((Date.now() - loginTime) < SESSION_DURATION) onlineCount++;
-                });
-                onlineCountEl.textContent = `🟢 ${onlineCount} online`;
-
-                if (users.length === 0) {
-                    container.innerHTML = '<div class="empty-users">No users registered yet</div>';
-                    return;
-                }
-
-                let html = '';
-                users.forEach((user) => {
-                    const isAdmin = user.Name?.toLowerCase() === settings.AdminName?.toLowerCase();
-                    const initial = user.Name?.charAt(0).toUpperCase() || '?';
-                    const time = user.LoginTime ? new Date(user.LoginTime).toLocaleString() : 'Never';
-                    const isLoggedIn = user.LoginTime ? (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION : false;
-
-                    html += `
-                        <div class="user-item">
-                            <div class="user-left">
-                                <input type="checkbox" class="user-checkbox" data-name="${user.Name}" ${isAdmin ? 'disabled' : ''} />
-                                <div class="user-avatar">${initial}</div>
-                                <span class="user-name">${user.Name}</span>
-                                ${isAdmin ? '<span class="user-badge admin">👑 Admin</span>' : ''}
-                                <span class="user-status ${isLoggedIn ? '' : 'logged-out'}">${isLoggedIn ? '🟢 Online' : '🔴 Offline'}</span>
-                            </div>
-                            <div class="user-actions">
-                                <span class="user-time">${time}</span>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                container.innerHTML = html;
-
-                const allCheckboxes = document.querySelectorAll('.user-checkbox:not(:disabled)');
-                const checkedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
-                const selectAll = document.getElementById('selectAllUsers');
-                if (allCheckboxes.length > 0) {
-                    selectAll.checked = allCheckboxes.length === checkedCheckboxes.length;
-                }
-            } catch (e) {
-                console.error('Error rendering users:', e);
-            }
+        // Ensure users is an array
+        if (!Array.isArray(users)) {
+            console.warn('⚠️ Users is not an array, using empty array');
+            container.innerHTML = '<div class="empty-users">No users registered yet</div>';
+            countEl.textContent = '0';
+            onlineCountEl.textContent = '🟢 0 online';
+            return;
         }
 
+        countEl.textContent = users.length;
+
+        let onlineCount = 0;
+        users.forEach(u => {
+            const loginTime = new Date(u.LoginTime).getTime();
+            if ((Date.now() - loginTime) < SESSION_DURATION) onlineCount++;
+        });
+        onlineCountEl.textContent = `🟢 ${onlineCount} online`;
+
+        if (users.length === 0) {
+            container.innerHTML = '<div class="empty-users">No users registered yet</div>';
+            return;
+        }
+
+        let html = '';
+        users.forEach((user) => {
+            const isAdmin = user.Name?.toLowerCase() === settings.AdminName?.toLowerCase();
+            const initial = user.Name?.charAt(0).toUpperCase() || '?';
+            const time = user.LoginTime ? new Date(user.LoginTime).toLocaleString() : 'Never';
+            const isLoggedIn = user.LoginTime ? (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION : false;
+
+            html += `
+                <div class="user-item">
+                    <div class="user-left">
+                        <input type="checkbox" class="user-checkbox" data-name="${user.Name}" ${isAdmin ? 'disabled' : ''} />
+                        <div class="user-avatar">${initial}</div>
+                        <span class="user-name">${user.Name}</span>
+                        ${isAdmin ? '<span class="user-badge admin">👑 Admin</span>' : ''}
+                        <span class="user-status ${isLoggedIn ? '' : 'logged-out'}">${isLoggedIn ? '🟢 Online' : '🔴 Offline'}</span>
+                    </div>
+                    <div class="user-actions">
+                        <span class="user-time">${time}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+        const allCheckboxes = document.querySelectorAll('.user-checkbox:not(:disabled)');
+        const checkedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
+        const selectAll = document.getElementById('selectAllUsers');
+        if (allCheckboxes.length > 0) {
+            selectAll.checked = allCheckboxes.length === checkedCheckboxes.length;
+        }
+    } catch (e) {
+        console.error('Error rendering users:', e);
+    }
+}
         // ============================================================
         // 6. SELECT ALL
         // ============================================================
