@@ -960,37 +960,37 @@
         </div>
 
         <div class="grid" id="subjectsGrid">
-            <a href="10science.pdf" class="card" data-subject="science">
+            <a href="#" class="card" data-subject="science">
                 <div class="icon">🔬</div>
                 <div class="title">Science</div>
                 <div class="sub">Physics • Chemistry • Biology</div>
             </a>
-            <a href="10maths.pdf" class="card" data-subject="maths">
+            <a href="#" class="card" data-subject="maths">
                 <div class="icon">📐</div>
                 <div class="title">Mathematics</div>
                 <div class="sub">Algebra • Geometry • Stats</div>
             </a>
-            <a href="10english.pdf" class="card" data-subject="english">
+            <a href="#" class="card" data-subject="english">
                 <div class="icon">📖</div>
                 <div class="title">English</div>
                 <div class="sub">Literature • Grammar</div>
             </a>
-            <a href="10social.pdf" class="card" data-subject="social">
+            <a href="#" class="card" data-subject="social">
                 <div class="icon">🌍</div>
                 <div class="title">Social Studies</div>
                 <div class="sub">History • Geography • Civics</div>
             </a>
-            <a href="10hindi.pdf" class="card" data-subject="hindi">
+            <a href="#" class="card" data-subject="hindi">
                 <div class="icon">📝</div>
                 <div class="title">Hindi</div>
                 <div class="sub">Grammar • Literature</div>
             </a>
-            <a href="10sanskrit.pdf" class="card" data-subject="sanskrit">
+            <a href="#" class="card" data-subject="sanskrit">
                 <div class="icon">🕉️</div>
                 <div class="title">Sanskrit</div>
                 <div class="sub">Grammar • Literature</div>
             </a>
-            <a href="10computer.pdf" class="card" data-subject="computer">
+            <a href="#" class="card" data-subject="computer">
                 <div class="icon">💻</div>
                 <div class="title">Computer</div>
                 <div class="sub">Programming • IT</div>
@@ -1198,38 +1198,27 @@
 
 <script>
     // ============================================================
-    // LOCALSTORAGE KEYS
+    // 🔥 GOOGLE APPS SCRIPT URL - YAHAN DAALEIN
+    // ============================================================
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSa0A2qTSB6E713ggcQe5R9njancvPn9_aRxxcMBzKKBJizt2lldHKdg1fM0ARD1BadA/exec';
+
+    // ============================================================
+    // LOCALSTORAGE KEYS (Sirf session ke liye)
     // ============================================================
     const LS_KEYS = {
         LOGGED_IN: 'isLoggedIn',
         USER_NAME: 'userName',
         LOGIN_TIME: 'loginTime',
         IS_ADMIN: 'isAdmin',
-        LOGIN_CODE: 'loginCode',
-        ADMIN_CODE: 'adminCode',
-        ADMIN_NAME: 'adminName',
-        DOWNLOAD_PASSWORD: 'downloadPassword',
-        USERS: 'registeredUsers',
-        THEME: 'theme',
         ADMIN_LOGGED_IN: 'isAdminLoggedIn',
         ADMIN_LOGIN_TIME: 'adminLoginTime',
+        THEME: 'theme'
     };
 
     const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
     // ============================================================
-    // DEFAULTS
-    // ============================================================
-    const DEFAULTS = {
-        loginCode: '1234',
-        adminCode: 'admin123',
-        adminName: 'Hasan',
-        downloadPassword: 'download123',
-        users: []
-    };
-
-    // ============================================================
-    // UTILITY FUNCTIONS
+    // UTILITY FUNCTIONS (LocalStorage)
     // ============================================================
     function getLS(key, defaultVal = null) {
         try {
@@ -1243,93 +1232,6 @@
         localStorage.setItem(key, typeof val === 'string' ? val : JSON.stringify(val));
     }
 
-    function getUsers() {
-        return getLS(LS_KEYS.USERS, DEFAULTS.users);
-    }
-
-    function saveUsers(users) {
-        setLS(LS_KEYS.USERS, users);
-    }
-
-    function getLoginCode() {
-        return getLS(LS_KEYS.LOGIN_CODE, DEFAULTS.loginCode);
-    }
-
-    function getAdminCode() {
-        return getLS(LS_KEYS.ADMIN_CODE, DEFAULTS.adminCode);
-    }
-
-    function getAdminName() {
-        return getLS(LS_KEYS.ADMIN_NAME, DEFAULTS.adminName);
-    }
-
-    function getDownloadPassword() {
-        return getLS(LS_KEYS.DOWNLOAD_PASSWORD, DEFAULTS.downloadPassword);
-    }
-
-    function setDownloadPassword(newPassword) {
-        setLS(LS_KEYS.DOWNLOAD_PASSWORD, newPassword);
-    }
-
-    function isLoggedIn() {
-        const loggedIn = getLS(LS_KEYS.LOGGED_IN, false);
-        const loginTime = getLS(LS_KEYS.LOGIN_TIME, 0);
-        return loggedIn && (Date.now() - loginTime) < SESSION_DURATION;
-    }
-
-    function isAdminLoggedIn() {
-        const loggedIn = getLS(LS_KEYS.ADMIN_LOGGED_IN, false);
-        const loginTime = getLS(LS_KEYS.ADMIN_LOGIN_TIME, 0);
-        return loggedIn && (Date.now() - loginTime) < SESSION_DURATION;
-    }
-
-    function getCurrentUser() {
-        return getLS(LS_KEYS.USER_NAME, 'Guest');
-    }
-
-    function isCurrentUserAdmin() {
-        const currentUser = getCurrentUser();
-        const adminName = getAdminName();
-        return currentUser.toLowerCase() === adminName.toLowerCase();
-    }
-
-    function addUser(name) {
-        const users = getUsers();
-        const exists = users.some(u => u.name.toLowerCase() === name.toLowerCase());
-        if (!exists) {
-            users.push({ name: name.trim(), loginTime: Date.now() });
-        } else {
-            const idx = users.findIndex(u => u.name.toLowerCase() === name.toLowerCase());
-            if (idx !== -1) users[idx].loginTime = Date.now();
-        }
-        saveUsers(users);
-        return true;
-    }
-
-    function logoutUserByName(name) {
-        let users = getUsers();
-        const idx = users.findIndex(u => u.name.toLowerCase() === name.toLowerCase());
-        if (idx !== -1) {
-            users[idx].loginTime = Date.now() - SESSION_DURATION - 10000;
-            saveUsers(users);
-            return true;
-        }
-        return false;
-    }
-
-    function logoutAllUsers() {
-        let users = getUsers();
-        users = users.map(u => {
-            u.loginTime = Date.now() - SESSION_DURATION - 10000;
-            return u;
-        });
-        saveUsers(users);
-        return true;
-    }
-
-    // ============================================================
-    // PAGE NAVIGATION
-    // ============================================================
     function showPage(pageId) {
         document.querySelectorAll('[id^="page-"]').forEach(el => {
             if (el.id !== pageId) el.classList.add('hidden');
@@ -1337,9 +1239,75 @@
         document.getElementById(pageId).classList.remove('hidden');
     }
 
-    function showPageDirect(pageId) {
-        document.querySelectorAll('[id^="page-"]').forEach(el => el.classList.add('hidden'));
-        document.getElementById(pageId).classList.remove('hidden');
+    // ============================================================
+    // API CALLS (Google Sheet)
+    // ============================================================
+    async function apiCall(action, params = {}) {
+        try {
+            const url = new URL(APPS_SCRIPT_URL);
+            url.searchParams.append('action', action);
+            Object.keys(params).forEach(key => {
+                url.searchParams.append(key, params[key]);
+            });
+            const response = await fetch(url.toString());
+            return await response.json();
+        } catch (e) {
+            console.error('API Error:', e);
+            return { error: e.toString() };
+        }
+    }
+
+    // ============================================================
+    // GET SETTINGS FROM SHEET
+    // ============================================================
+    async function getSettings() {
+        const data = await apiCall('getSettings');
+        if (data.error) {
+            console.error('Error getting settings:', data.error);
+            return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Hasan', DownloadPassword: 'download123' };
+        }
+        return data;
+    }
+
+    // ============================================================
+    // GET USERS FROM SHEET
+    // ============================================================
+    async function getUsers() {
+        const data = await apiCall('getUsers');
+        if (data.error) {
+            console.error('Error getting users:', data.error);
+            return [];
+        }
+        return data;
+    }
+
+    // ============================================================
+    // ADD USER TO SHEET
+    // ============================================================
+    async function addUserToSheet(name) {
+        const data = await apiCall('addUser', { name: name });
+        return data;
+    }
+
+    // ============================================================
+    // LOGOUT USER FROM SHEET
+    // ============================================================
+    async function logoutUserFromSheet(name) {
+        const data = await apiCall('logoutUser', { name: name });
+        return data;
+    }
+
+    // ============================================================
+    // UPDATE SETTINGS IN SHEET
+    // ============================================================
+    async function updateSettings(loginCode, adminCode, adminName, downloadPassword) {
+        const data = await apiCall('updateSettings', {
+            loginCode: loginCode,
+            adminCode: adminCode,
+            adminName: adminName,
+            downloadPassword: downloadPassword
+        });
+        return data;
     }
 
     // ============================================================
@@ -1384,7 +1352,7 @@
     // ============================================================
     // LOGIN FUNCTIONS
     // ============================================================
-    function handleUserLogin() {
+    async function handleUserLogin() {
         const name = document.getElementById('loginName').value.trim();
         const code = document.getElementById('loginCodeInput').value.trim();
         const errorEl = document.getElementById('loginError');
@@ -1400,8 +1368,8 @@
             return;
         }
 
-        const loginCode = getLoginCode();
-        if (code !== loginCode) {
+        const settings = await getSettings();
+        if (code !== settings.LoginCode) {
             errorEl.textContent = '❌ Invalid access code. Please try again.';
             errorEl.classList.add('show');
             document.getElementById('loginCodeInput').value = '';
@@ -1410,13 +1378,15 @@
             return;
         }
 
-        addUser(name);
+        // Add user to sheet
+        await addUserToSheet(name);
+
+        // Set session
         setLS(LS_KEYS.LOGGED_IN, true);
         setLS(LS_KEYS.USER_NAME, name);
         setLS(LS_KEYS.LOGIN_TIME, Date.now());
 
-        const adminName = getAdminName();
-        if (name.toLowerCase() === adminName.toLowerCase()) {
+        if (name.toLowerCase() === settings.AdminName.toLowerCase()) {
             setLS(LS_KEYS.IS_ADMIN, true);
         } else {
             setLS(LS_KEYS.IS_ADMIN, false);
@@ -1429,7 +1399,7 @@
         showMainPage();
     }
 
-    function handleAdminLogin() {
+    async function handleAdminLogin() {
         const code = document.getElementById('adminCodeInput').value.trim();
         const errorEl = document.getElementById('adminLoginError');
 
@@ -1439,8 +1409,8 @@
             return;
         }
 
-        const adminCode = getAdminCode();
-        if (code !== adminCode) {
+        const settings = await getSettings();
+        if (code !== settings.AdminCode) {
             errorEl.textContent = '❌ Invalid admin code. Please try again.';
             errorEl.classList.add('show');
             document.getElementById('adminCodeInput').value = '';
@@ -1469,15 +1439,15 @@
     }
 
     function showMainPage() {
-        if (!isLoggedIn()) {
+        if (!getLS(LS_KEYS.LOGGED_IN, false)) {
             showLoginPage();
             return;
         }
-        const name = getCurrentUser();
+        const name = getLS(LS_KEYS.USER_NAME, 'Guest');
         document.getElementById('mainUserAvatar').textContent = name.charAt(0).toUpperCase();
         document.getElementById('mainUserName').textContent = name;
 
-        const isAdmin = isCurrentUserAdmin();
+        const isAdmin = getLS(LS_KEYS.IS_ADMIN, false);
         const adminBadge = document.getElementById('mainAdminBadge');
         const adminBtn = document.getElementById('mainAdminPanelBtn');
 
@@ -1492,18 +1462,19 @@
         showPage('page-main');
     }
 
-    function showAdminPanel() {
-        if (!isAdminLoggedIn()) {
+    async function showAdminPanel() {
+        if (!getLS(LS_KEYS.ADMIN_LOGGED_IN, false)) {
             showAdminLoginPage();
             return;
         }
-        document.getElementById('adminPanelAdminName').textContent = getAdminName();
+        const settings = await getSettings();
+        document.getElementById('adminPanelAdminName').textContent = settings.AdminName || 'Hasan';
         renderUsersList();
         showPage('page-admin-panel');
     }
 
     function showSubjectsPage(classNum) {
-        if (!isLoggedIn()) {
+        if (!getLS(LS_KEYS.LOGGED_IN, false)) {
             showLoginPage();
             return;
         }
@@ -1522,7 +1493,7 @@
     }
 
     // ============================================================
-    // PDF VIEWER (Read-Only + Screenshot Block)
+    // PDF VIEWER
     // ============================================================
     let pdfViewerActive = false;
 
@@ -1542,7 +1513,6 @@
         // Disable interactions
         disableInteractions();
 
-        // Scroll to top
         window.scrollTo(0, 0);
     }
 
@@ -1556,7 +1526,7 @@
     }
 
     // ============================================================
-    // INTERACTION BLOCK (Screenshot, Download, Copy)
+    // INTERACTION BLOCK
     // ============================================================
     function disableInteractions() {
         document.addEventListener('contextmenu', blockEvent);
@@ -1631,7 +1601,7 @@
 
     function handleDownload() {
         const password = document.getElementById('downloadPasswordInput').value.trim();
-        const correctPassword = getDownloadPassword();
+        const correctPassword = getDownloadPasswordFromSettings();
 
         if (password === correctPassword) {
             const pdfUrl = `${downloadClass}${downloadSubject}.pdf`;
@@ -1655,20 +1625,21 @@
     }
 
     // ============================================================
-    // ADMIN PANEL - RENDER USERS
+    // RENDER USERS LIST
     // ============================================================
-    function renderUsersList() {
-        const users = getUsers();
+    async function renderUsersList() {
+        const users = await getUsers();
+        const settings = await getSettings();
         const container = document.getElementById('usersList');
         const countEl = document.getElementById('userCount');
         const onlineCountEl = document.getElementById('onlineCount');
-        const adminName = getAdminName();
+        const adminName = settings.AdminName || 'Hasan';
 
         countEl.textContent = users.length;
 
         let onlineCount = 0;
         users.forEach(u => {
-            if ((Date.now() - u.loginTime) < SESSION_DURATION) onlineCount++;
+            if ((Date.now() - new Date(u.LoginTime).getTime()) < SESSION_DURATION) onlineCount++;
         });
         onlineCountEl.textContent = `🟢 ${onlineCount} online`;
 
@@ -1679,17 +1650,17 @@
 
         let html = '';
         users.forEach((user) => {
-            const isAdmin = user.name.toLowerCase() === adminName.toLowerCase();
-            const initial = user.name.charAt(0).toUpperCase();
-            const time = new Date(user.loginTime).toLocaleString();
-            const isLoggedIn = (Date.now() - user.loginTime) < SESSION_DURATION;
+            const isAdmin = user.Name.toLowerCase() === adminName.toLowerCase();
+            const initial = user.Name.charAt(0).toUpperCase();
+            const time = new Date(user.LoginTime).toLocaleString();
+            const isLoggedIn = (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION;
 
             html += `
                 <div class="user-item">
                     <div class="user-left">
-                        <input type="checkbox" class="user-checkbox" data-name="${user.name}" ${isAdmin ? 'disabled' : ''} />
+                        <input type="checkbox" class="user-checkbox" data-name="${user.Name}" ${isAdmin ? 'disabled' : ''} />
                         <div class="user-avatar">${initial}</div>
-                        <span class="user-name">${user.name}</span>
+                        <span class="user-name">${user.Name}</span>
                         ${isAdmin ? '<span class="user-badge admin">👑 Admin</span>' : ''}
                         <span class="user-status ${isLoggedIn ? '' : 'logged-out'}">${isLoggedIn ? '🟢 Online' : '🔴 Offline'}</span>
                     </div>
@@ -1713,7 +1684,7 @@
     // ============================================================
     // ADMIN PANEL - CHANGE FUNCTIONS
     // ============================================================
-    function changeLoginCode() {
+    async function changeLoginCode() {
         const newCode = document.getElementById('newLoginCodeInput').value.trim();
         const confirmCode = document.getElementById('confirmLoginCodeInput').value.trim();
         const msgEl = document.getElementById('loginCodeMsg');
@@ -1729,9 +1700,11 @@
             return;
         }
 
-        setLS(LS_KEYS.LOGIN_CODE, newCode);
-        logoutAllUsers();
-        renderUsersList();
+        const settings = await getSettings();
+        await updateSettings(newCode, settings.AdminCode, settings.AdminName, settings.DownloadPassword);
+
+        setLS(LS_KEYS.LOGGED_IN, false);
+        setLS(LS_KEYS.LOGIN_TIME, 0);
 
         msgEl.textContent = `✅ Login code changed to "${newCode}"! All users logged out.`;
         msgEl.classList.add('show');
@@ -1743,10 +1716,11 @@
         document.getElementById('showLoginCodeBtn').textContent = '👁️';
         loginVisible = false;
 
+        renderUsersList();
         setTimeout(() => msgEl.classList.remove('show'), 4000);
     }
 
-    function changeAdminCode() {
+    async function changeAdminCode() {
         const newCode = document.getElementById('newAdminCodeInput').value.trim();
         const confirmCode = document.getElementById('confirmAdminCodeInput').value.trim();
         const msgEl = document.getElementById('adminCodeMsg');
@@ -1762,7 +1736,8 @@
             return;
         }
 
-        setLS(LS_KEYS.ADMIN_CODE, newCode);
+        const settings = await getSettings();
+        await updateSettings(settings.LoginCode, newCode, settings.AdminName, settings.DownloadPassword);
 
         msgEl.textContent = `✅ Admin code changed to "${newCode}"!`;
         msgEl.classList.add('show');
@@ -1777,7 +1752,7 @@
         setTimeout(() => msgEl.classList.remove('show'), 4000);
     }
 
-    function changeAdminName() {
+    async function changeAdminName() {
         const newName = document.getElementById('newAdminNameInput').value.trim();
         const msgEl = document.getElementById('adminNameMsg');
 
@@ -1787,8 +1762,8 @@
             return;
         }
 
-        const users = getUsers();
-        const userExists = users.some(u => u.name.toLowerCase() === newName.toLowerCase());
+        const users = await getUsers();
+        const userExists = users.some(u => u.Name.toLowerCase() === newName.toLowerCase());
 
         if (!userExists) {
             msgEl.textContent = `❌ User "${newName}" does not exist.`;
@@ -1796,7 +1771,9 @@
             return;
         }
 
-        setLS(LS_KEYS.ADMIN_NAME, newName);
+        const settings = await getSettings();
+        await updateSettings(settings.LoginCode, settings.AdminCode, newName, settings.DownloadPassword);
+
         document.getElementById('adminPanelAdminName').textContent = newName;
 
         msgEl.textContent = `✅ Admin name changed to "${newName}"!`;
@@ -1812,7 +1789,7 @@
         }, 2000);
     }
 
-    function changeDownloadPassword() {
+    async function changeDownloadPassword() {
         const newPassword = document.getElementById('newDownloadPasswordInput').value.trim();
         const confirmPassword = document.getElementById('confirmDownloadPasswordInput').value.trim();
         const msgEl = document.getElementById('downloadPasswordMsg');
@@ -1828,7 +1805,9 @@
             return;
         }
 
-        setDownloadPassword(newPassword);
+        const settings = await getSettings();
+        await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName, newPassword);
+
         msgEl.textContent = `✅ Download password changed to "${newPassword}"!`;
         msgEl.classList.add('show');
         document.getElementById('newDownloadPasswordInput').value = '';
@@ -1837,37 +1816,11 @@
     }
 
     // ============================================================
-    // CODE SHOW/HIDE (Admin Panel)
+    // GET DOWNLOAD PASSWORD FROM SETTINGS
     // ============================================================
-    let loginVisible = false;
-    let adminVisible = false;
-
-    function toggleLoginCodeVisibility() {
-        loginVisible = !loginVisible;
-        const el = document.getElementById('currentLoginCodeDisplay');
-        if (loginVisible) {
-            el.textContent = getLoginCode();
-            el.className = 'value';
-            document.getElementById('showLoginCodeBtn').textContent = '🙈';
-        } else {
-            el.textContent = '••••••••';
-            el.className = 'value hidden';
-            document.getElementById('showLoginCodeBtn').textContent = '👁️';
-        }
-    }
-
-    function toggleAdminCodeVisibility() {
-        adminVisible = !adminVisible;
-        const el = document.getElementById('currentAdminCodeDisplay');
-        if (adminVisible) {
-            el.textContent = getAdminCode();
-            el.className = 'value admin-code';
-            document.getElementById('showAdminCodeBtn').textContent = '🙈';
-        } else {
-            el.textContent = '••••••••';
-            el.className = 'value admin-code hidden';
-            document.getElementById('showAdminCodeBtn').textContent = '👁️';
-        }
+    async function getDownloadPasswordFromSettings() {
+        const settings = await getSettings();
+        return settings.DownloadPassword || 'download123';
     }
 
     // ============================================================
@@ -1892,7 +1845,7 @@
         }
     }
 
-    function logoutSelectedUsers() {
+    async function logoutSelectedUsers() {
         const checkboxes = document.querySelectorAll('.user-checkbox:checked');
         if (checkboxes.length === 0) {
             alert('⚠️ Please select at least one user.');
@@ -1901,9 +1854,12 @@
         if (!confirm(`Logout ${checkboxes.length} selected user(s)?`)) return;
 
         const selectedNames = Array.from(checkboxes).map(cb => cb.dataset.name);
-        const currentUser = getCurrentUser();
+        const currentUser = getLS(LS_KEYS.USER_NAME, '');
 
-        selectedNames.forEach(name => logoutUserByName(name));
+        for (const name of selectedNames) {
+            await logoutUserFromSheet(name);
+        }
+
         renderUsersList();
 
         if (selectedNames.includes(currentUser)) {
@@ -1918,9 +1874,14 @@
         alert(`✅ ${selectedNames.length} user(s) logged out successfully.`);
     }
 
-    function logoutAllUsersHandler() {
+    async function logoutAllUsersHandler() {
         if (!confirm('⚠️ Are you sure you want to logout ALL users?')) return;
-        logoutAllUsers();
+        
+        const users = await getUsers();
+        for (const user of users) {
+            await logoutUserFromSheet(user.Name);
+        }
+        
         setLS(LS_KEYS.LOGGED_IN, false);
         setLS(LS_KEYS.LOGIN_TIME, 0);
         renderUsersList();
@@ -1981,7 +1942,7 @@
         // ===== MAIN PAGE =====
         document.getElementById('mainLogoutBtn').addEventListener('click', logoutUser);
         document.getElementById('mainAdminPanelBtn').addEventListener('click', function() {
-            if (isCurrentUserAdmin()) {
+            if (getLS(LS_KEYS.IS_ADMIN, false)) {
                 setLS(LS_KEYS.ADMIN_LOGGED_IN, true);
                 setLS(LS_KEYS.ADMIN_LOGIN_TIME, Date.now());
                 showAdminPanel();
@@ -2002,7 +1963,6 @@
 
         // ===== SUBJECTS PAGE =====
         document.getElementById('subjectsBackBtn').addEventListener('click', function() {
-            const classNum = document.getElementById('subjectsClassNumber').textContent;
             showMainPage();
         });
         document.getElementById('subjectsLogoutBtn').addEventListener('click', logoutUser);
@@ -2056,14 +2016,14 @@
 
         // ===== ADMIN PANEL =====
         document.getElementById('adminPanelBackBtn').addEventListener('click', function() {
-            if (isLoggedIn()) {
+            if (getLS(LS_KEYS.LOGGED_IN, false)) {
                 showMainPage();
             } else {
                 showLoginPage();
             }
         });
         document.getElementById('adminPanelBackBtn2').addEventListener('click', function() {
-            if (isLoggedIn()) {
+            if (getLS(LS_KEYS.LOGGED_IN, false)) {
                 showMainPage();
             } else {
                 showLoginPage();
@@ -2081,8 +2041,41 @@
         document.getElementById('changeAdminNameBtn').addEventListener('click', changeAdminName);
         document.getElementById('changeDownloadPasswordBtn').addEventListener('click', changeDownloadPassword);
 
-        document.getElementById('showLoginCodeBtn').addEventListener('click', toggleLoginCodeVisibility);
-        document.getElementById('showAdminCodeBtn').addEventListener('click', toggleAdminCodeVisibility);
+        // ===== CODE SHOW/HIDE =====
+        let loginVisible = false;
+        let adminVisible = false;
+
+        document.getElementById('showLoginCodeBtn').addEventListener('click', function() {
+            loginVisible = !loginVisible;
+            const el = document.getElementById('currentLoginCodeDisplay');
+            if (loginVisible) {
+                getSettings().then(s => {
+                    el.textContent = s.LoginCode;
+                    el.className = 'value';
+                    document.getElementById('showLoginCodeBtn').textContent = '🙈';
+                });
+            } else {
+                el.textContent = '••••••••';
+                el.className = 'value hidden';
+                document.getElementById('showLoginCodeBtn').textContent = '👁️';
+            }
+        });
+
+        document.getElementById('showAdminCodeBtn').addEventListener('click', function() {
+            adminVisible = !adminVisible;
+            const el = document.getElementById('currentAdminCodeDisplay');
+            if (adminVisible) {
+                getSettings().then(s => {
+                    el.textContent = s.AdminCode;
+                    el.className = 'value admin-code';
+                    document.getElementById('showAdminCodeBtn').textContent = '🙈';
+                });
+            } else {
+                el.textContent = '••••••••';
+                el.className = 'value admin-code hidden';
+                document.getElementById('showAdminCodeBtn').textContent = '👁️';
+            }
+        });
 
         document.getElementById('logoutSelectedBtn').addEventListener('click', logoutSelectedUsers);
         document.getElementById('logoutAllBtn').addEventListener('click', logoutAllUsersHandler);
@@ -2102,9 +2095,9 @@
         }, 10000);
 
         // ===== CHECK LOGIN STATUS =====
-        if (isLoggedIn()) {
+        if (getLS(LS_KEYS.LOGGED_IN, false)) {
             showMainPage();
-        } else if (isAdminLoggedIn()) {
+        } else if (getLS(LS_KEYS.ADMIN_LOGGED_IN, false)) {
             showAdminPanel();
         } else {
             showLoginPage();
@@ -2126,8 +2119,8 @@
             }
         });
 
-        console.log('🔒 App loaded securely.');
-        
+        console.log('🔒 App loaded with Google Sheet backend.');
+       
     });
 </script>
 
