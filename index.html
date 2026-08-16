@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>NCERT Notes - Science</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== RESET & BASE ===== */
+         /* ===== RESET & BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -809,6 +809,14 @@
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
+        
+        
+        /* ===== ADD THIS TO BLOCK SELECTION ===== */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
     </style>
 </head>
 <body>
@@ -982,12 +990,12 @@
             <a href="#" class="card" id="viewPdfBtn" style="border-color: rgba(129,140,248,0.3);">
                 <div class="icon" style="background: rgba(129,140,248,0.15); color: #818cf8;">📖</div>
                 <div class="title">View</div>
-                <div class="sub" style="font-size:12px; color:#94a3b8;">🔒 Read-Only • No Download</div>
+                <div class="sub" style="font-size:12px; color:#94a3b8;">🔒 Read-Only • No Screenshot</div>
             </a>
-            <a href="#" class="card" id="downloadPdfBtn" style="border-color: rgba(251,191,36,0.3);">
-                <div class="icon" style="background: rgba(251,191,36,0.15); color: #fbbf24;">⬇️</div>
+            <a href="#" class="card" id="downloadPdfBtn" style="border-color: rgba(52,211,153,0.3);">
+                <div class="icon" style="background: rgba(52,211,153,0.15); color: #34d399;">⬇️</div>
                 <div class="title">Download</div>
-                <div class="sub" style="font-size:12px; color:#94a3b8;">🔑 Password Required</div>
+                <div class="sub" style="font-size:12px; color:#94a3b8;">📥 No Password Required</div>
             </a>
         </div>
 
@@ -1076,20 +1084,6 @@
         <button class="btn btn-login admin-login" id="changeAdminCodeBtn" style="width:100%;">🛡️ Change Admin Code</button>
         <div class="error-msg" id="adminCodeMsg"></div>
 
-        <!-- Change Download Password -->
-        <div class="section-title" style="margin-top:20px;">⬇️ Download Password</div>
-        <div class="input-group">
-            <label for="newDownloadPasswordInput">New Download Password</label>
-            <input type="text" id="newDownloadPasswordInput" placeholder="Enter new download password (min 4 characters)" maxlength="20" />
-            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ This password is required to download PDFs</div>
-        </div>
-        <div class="input-group">
-            <label for="confirmDownloadPasswordInput">Confirm New Download Password</label>
-            <input type="text" id="confirmDownloadPasswordInput" placeholder="Re-enter new download password" maxlength="20" />
-        </div>
-        <button class="btn btn-login green" id="changeDownloadPasswordBtn" style="width:100%;">⬇️ Change Download Password</button>
-        <div class="error-msg" id="downloadPasswordMsg"></div>
-
         <!-- Users List -->
         <div class="section-title" style="margin-top:24px;">👥 Registered Users (<span id="userCount">0</span>) <span class="online-count" id="onlineCount">🟢 0 online</span></div>
 
@@ -1098,9 +1092,9 @@
                 <input type="checkbox" id="selectAllUsers" />
                 <label for="selectAllUsers">Select All</label>
             </div>
-            <!-- <div class="right">
+            <div class="right">
                 <button class="btn-danger" id="logoutSelectedBtn">🚪 Logout Selected</button>
-            </div> -->
+            </div>
         </div>
 
         <div class="users-list" id="usersList">
@@ -1110,7 +1104,7 @@
         <div class="back-row">
             <button class="btn btn-back" id="adminPanelBackBtn2">← Back to Site</button>
             <a href="#" id="adminPanelSwitchAdmin" class="btn btn-back" style="text-decoration:none;">🔄 Switch Admin</a>
-            <!-- <button class="btn-danger" id="logoutAllBtn">🚪 Logout All Users</button> -->
+            <button class="btn-danger" id="logoutAllBtn">🚪 Logout All Users</button>
         </div>
 
         <div class="footer-text" style="margin-top:20px;">— by <span>Hasan</span></div>
@@ -1124,7 +1118,7 @@
             <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                 <button class="btn btn-back" id="pdfViewerBackBtn" style="font-size:14px; padding:10px 20px;">← Back</button>
                 <span class="class-badge" id="pdfViewerBadge">Class 10 - Chapter</span>
-                <span class="readonly-badge">🔒 Read-Only</span>
+                <span class="readonly-badge">🔒 Read-Only • No Screenshot</span>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
                 <button class="btn btn-theme" id="pdfViewerThemeToggle">☀️</button>
@@ -1135,29 +1129,13 @@
         </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- DOWNLOAD MODAL -->
-    <!-- ============================================================ -->
-    <div class="modal-overlay" id="downloadModal">
-        <div class="modal-content">
-            <h2>🔑 Enter Password</h2>
-            <p>Enter download password to continue</p>
-            <input type="password" id="downloadPasswordInput" placeholder="Enter download password" />
-            <div class="btn-group">
-                <button class="btn btn-login" id="downloadConfirmBtn">⬇️ Download</button>
-                <button class="btn btn-back" id="downloadCancelBtn">Cancel</button>
-            </div>
-            <div class="error-msg" id="downloadError">❌ Invalid password. Please try again.</div>
-        </div>
-    </div>
-
 </div>
 
 <script>
     // ============================================================
     // 🔥 GOOGLE APPS SCRIPT URL - YAHAN DAALEIN
     // ============================================================
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwW77K-601fyfQ-pEwXF4NzhCqCOaUEUQYd3t28W5YU2x0pCHxTHV7vhKtCFcUPQn6low/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYO2Escziwlt-qAsLd7MDKD1bf2eXJTsaGRL1UUAb_fc5s_kMHXWEqBaPI3eBPlno7vQ/exec';
 
     // ============================================================
     // 📚 CHAPTER DATA (Sirf Science)
@@ -1287,7 +1265,7 @@
         const data = await apiCall('getSettings');
         if (data.error) {
             console.error('Error getting settings:', data.error);
-            return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Hasan', DownloadPassword: 'download123' };
+            return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Hasan' };
         }
         return data;
     }
@@ -1323,12 +1301,11 @@
     // ============================================================
     // UPDATE SETTINGS IN SHEET
     // ============================================================
-    async function updateSettings(loginCode, adminCode, adminName, downloadPassword) {
+    async function updateSettings(loginCode, adminCode, adminName) {
         const data = await apiCall('updateSettings', {
             loginCode: loginCode,
             adminCode: adminCode,
-            adminName: adminName,
-            downloadPassword: downloadPassword
+            adminName: adminName
         });
         return data;
     }
@@ -1549,16 +1526,12 @@
     }
 
     // ============================================================
-    // PDF VIEWER
+    // PDF VIEWER WITH SCREENSHOT BLOCK
     // ============================================================
     let pdfViewerActive = false;
-    let currentPdfClass = '';
-    let currentPdfChapter = '';
 
     function viewPdf(classNum, chapterId) {
         const pdfUrl = `${classNum}${chapterId}.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
-        currentPdfClass = classNum;
-        currentPdfChapter = chapterId;
 
         const chapters = CHAPTERS[classNum] || [];
         const ch = chapters.find(c => c.id === chapterId);
@@ -1585,17 +1558,25 @@
     }
 
     // ============================================================
-    // INTERACTION BLOCK
+    // INTERACTION BLOCK (Screenshot + Copy + Right-click)
     // ============================================================
     function disableInteractions() {
+        // PC ke liye
         document.addEventListener('contextmenu', blockEvent);
         document.addEventListener('keydown', blockKeyboardShortcuts);
         document.addEventListener('dragstart', blockEvent);
         document.addEventListener('copy', blockEvent);
         document.addEventListener('selectstart', blockEvent);
         document.addEventListener('keyup', blockPrintScreen);
+        
+        // 📱 Mobile ke liye — screenshot block
+        document.addEventListener('visibilitychange', blockVisibilityChange);
+        document.addEventListener('touchstart', blockTouchStart);
+        
+        // CSS se bhi block
         document.body.style.userSelect = 'none';
         document.body.style.webkitUserSelect = 'none';
+        document.body.style.webkitTouchCallout = 'none';
     }
 
     function enableInteractions() {
@@ -1605,8 +1586,11 @@
         document.removeEventListener('copy', blockEvent);
         document.removeEventListener('selectstart', blockEvent);
         document.removeEventListener('keyup', blockPrintScreen);
+        document.removeEventListener('visibilitychange', blockVisibilityChange);
+        document.removeEventListener('touchstart', blockTouchStart);
         document.body.style.userSelect = '';
         document.body.style.webkitUserSelect = '';
+        document.body.style.webkitTouchCallout = '';
     }
 
     function blockEvent(e) {
@@ -1639,51 +1623,43 @@
         }
     }
 
+    function blockVisibilityChange() {
+        // Tab switch ya screenshot attempt
+        if (document.hidden) {
+            showToast('⛔ Screenshots are disabled.', 'error');
+        }
+    }
+
+    function blockTouchStart(e) {
+        // Mobile long press (save image)
+        if (e.touches && e.touches.length > 1) {
+            e.preventDefault();
+            showToast('⛔ Screenshots are disabled.', 'error');
+            return false;
+        }
+    }
+
     // ============================================================
-    // DOWNLOAD PDF (Password Protected)
+    // DOWNLOAD PDF (No Password)
     // ============================================================
     let downloadClass = '';
     let downloadChapter = '';
     let downloadChapterName = '';
 
     function showDownloadModal(classNum, chapterId, chapterName) {
+        // Direct download — no modal, no password
         downloadClass = classNum;
         downloadChapter = chapterId;
         downloadChapterName = chapterName;
-        document.getElementById('downloadModal').classList.add('active');
-        document.getElementById('downloadPasswordInput').value = '';
-        document.getElementById('downloadError').classList.remove('show');
-        document.getElementById('downloadPasswordInput').focus();
-    }
-
-    function hideDownloadModal() {
-        document.getElementById('downloadModal').classList.remove('active');
-    }
-
-    async function handleDownload() {
-        const password = document.getElementById('downloadPasswordInput').value.trim();
-        const settings = await getSettings();
-        const correctPassword = settings.DownloadPassword || 'download123';
-
-        if (password === correctPassword) {
-            const pdfUrl = `${downloadClass}${downloadChapter}.pdf`;
-            const link = document.createElement('a');
-            link.href = pdfUrl;
-            link.download = `${downloadClass}_${downloadChapter}.pdf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            hideDownloadModal();
-            showToast('✅ Download started successfully!', 'success');
-        } else {
-            document.getElementById('downloadError').textContent = '❌ Invalid password. Please try again.';
-            document.getElementById('downloadError').classList.add('show');
-            document.getElementById('downloadPasswordInput').value = '';
-            document.getElementById('downloadPasswordInput').focus();
-            setTimeout(() => {
-                document.getElementById('downloadError').classList.remove('show');
-            }, 3000);
-        }
+        
+        const pdfUrl = `${downloadClass}${downloadChapter}.pdf`;
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = `${downloadClass}_${downloadChapter}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('✅ Download started!', 'success');
     }
 
     // ============================================================
@@ -1763,7 +1739,7 @@
         }
 
         const settings = await getSettings();
-        await updateSettings(newCode, settings.AdminCode, settings.AdminName, settings.DownloadPassword);
+        await updateSettings(newCode, settings.AdminCode, settings.AdminName);
 
         setLS(LS_KEYS.LOGGED_IN, false);
         setLS(LS_KEYS.LOGIN_TIME, 0);
@@ -1799,7 +1775,7 @@
         }
 
         const settings = await getSettings();
-        await updateSettings(settings.LoginCode, newCode, settings.AdminName, settings.DownloadPassword);
+        await updateSettings(settings.LoginCode, newCode, settings.AdminName);
 
         msgEl.textContent = `✅ Admin code changed to "${newCode}"!`;
         msgEl.classList.add('show');
@@ -1834,7 +1810,7 @@
         }
 
         const settings = await getSettings();
-        await updateSettings(settings.LoginCode, settings.AdminCode, newName, settings.DownloadPassword);
+        await updateSettings(settings.LoginCode, settings.AdminCode, newName);
 
         document.getElementById('adminPanelAdminName').textContent = newName;
 
@@ -1851,40 +1827,8 @@
         }, 2000);
     }
 
-    async function changeDownloadPassword() {
-        const newPassword = document.getElementById('newDownloadPasswordInput').value.trim();
-        const confirmPassword = document.getElementById('confirmDownloadPasswordInput').value.trim();
-        const msgEl = document.getElementById('downloadPasswordMsg');
-
-        if (!newPassword || newPassword.length < 4) {
-            msgEl.textContent = '⚠️ Password must be at least 4 characters long.';
-            msgEl.classList.add('show');
-            return;
-        }
-        if (newPassword !== confirmPassword) {
-            msgEl.textContent = '❌ Passwords do not match.';
-            msgEl.classList.add('show');
-            return;
-        }
-
-        const settings = await getSettings();
-        await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName, newPassword);
-
-        msgEl.textContent = `✅ Download password changed to "${newPassword}"!`;
-        msgEl.classList.add('show');
-        document.getElementById('newDownloadPasswordInput').value = '';
-        document.getElementById('confirmDownloadPasswordInput').value = '';
-        setTimeout(() => msgEl.classList.remove('show'), 4000);
-    }
-
     // ============================================================
-    // CODE SHOW/HIDE (Admin Panel)
-    // ============================================================
-    let loginVisible = false;
-    let adminVisible = false;
-
-    // ============================================================
-    // LOGOUT FUNCTIONS (Sirf LocalStorage Clear + Sheet Expire)
+    // LOGOUT FUNCTIONS
     // ============================================================
     function logoutUser() {
         if (confirm('Are you sure you want to logout?')) {
@@ -2058,16 +2002,6 @@
         document.getElementById('pdfViewerBackBtn').addEventListener('click', closePdfViewer);
         document.getElementById('pdfViewerThemeToggle').addEventListener('click', toggleTheme);
 
-        // ===== DOWNLOAD MODAL =====
-        document.getElementById('downloadConfirmBtn').addEventListener('click', handleDownload);
-        document.getElementById('downloadPasswordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') handleDownload();
-        });
-        document.getElementById('downloadCancelBtn').addEventListener('click', hideDownloadModal);
-        document.getElementById('downloadModal').addEventListener('click', function(e) {
-            if (e.target === this) hideDownloadModal();
-        });
-
         // ===== ADMIN PANEL =====
         document.getElementById('adminPanelBackBtn').addEventListener('click', function() {
             if (getLS(LS_KEYS.LOGGED_IN, false)) {
@@ -2093,9 +2027,11 @@
         document.getElementById('changeLoginCodeBtn').addEventListener('click', changeLoginCode);
         document.getElementById('changeAdminCodeBtn').addEventListener('click', changeAdminCode);
         document.getElementById('changeAdminNameBtn').addEventListener('click', changeAdminName);
-        document.getElementById('changeDownloadPasswordBtn').addEventListener('click', changeDownloadPassword);
 
         // ===== CODE SHOW/HIDE =====
+        let loginVisible = false;
+        let adminVisible = false;
+
         document.getElementById('showLoginCodeBtn').addEventListener('click', function() {
             loginVisible = !loginVisible;
             const el = document.getElementById('currentLoginCodeDisplay');
