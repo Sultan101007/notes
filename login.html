@@ -15,6 +15,7 @@
             align-items: center;
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             padding: 20px;
+            transition: background 0.3s ease;
         }
         .login-container {
             width: 100%; max-width: 440px;
@@ -40,7 +41,7 @@
             font-family: 'Inter', sans-serif;
             transition: 0.3s ease; outline: none;
         }
-        .input-group input:focus { border-color: #818cf8; background: rgba(255, 255, 255, 0.08); }
+        .input-group input:focus { border-color: #818cf8; background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 30px rgba(129, 140, 248, 0.08); }
         .input-group .toggle-visibility {
             position: absolute; right: 14px; bottom: 14px;
             background: none; border: none;
@@ -57,13 +58,38 @@
             font-family: 'Inter', sans-serif; margin-top: 8px;
         }
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(129, 140, 248, 0.25); }
-        .error-msg { color: #f87171; font-size: 14px; margin-top: 14px; display: none; }
+        .login-btn:active { transform: scale(0.97); }
+        .error-msg { color: #f87171; font-size: 14px; margin-top: 14px; min-height: 24px; display: none; }
         .error-msg.show { display: block; }
-        .footer-text { margin-top: 24px; color: #475569; font-size: 12px; }
+        .footer-text { margin-top: 24px; color: #475569; font-size: 12px; letter-spacing: 0.3px; }
         .footer-text span { color: #818cf8; }
         .admin-link { margin-top: 12px; font-size: 13px; }
         .admin-link a { color: #818cf8; text-decoration: none; font-weight: 600; }
         .admin-link a:hover { text-decoration: underline; }
+        body.light-theme {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
+        }
+        body.light-theme .login-container {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
+        }
+        body.light-theme .login-container h1 { color: #1a1a2e; }
+        body.light-theme .login-container p { color: #6b7280; }
+        body.light-theme .input-group label { color: #4b5563; }
+        body.light-theme .input-group input {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: #1a1a2e;
+        }
+        body.light-theme .input-group input::placeholder { color: #9ca3af; }
+        body.light-theme .input-group input:focus { border-color: #4f46e5; background: rgba(0, 0, 0, 0.06); }
+        body.light-theme .footer-text { color: #9ca3af; }
+        body.light-theme .footer-text span { color: #4f46e5; }
+        body.light-theme .admin-link a { color: #4f46e5; }
+        @media (max-width: 480px) {
+            .login-container { padding: 32px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -96,52 +122,185 @@
     </div>
 
     <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
+        // ============================================================
+        // 🔥 APNI API URL YAHAN DAALEIN
+        // ============================================================
+        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7';
 
-async function getSettings() {
-    const response = await fetch(APPS_SCRIPT_URL + '?action=getSettings');
-    return await response.json();
-}
+        const SESSION_DURATION = 24 * 60 * 60 * 1000;
 
-async function login() {
-    const name = document.getElementById('userName').value;
-    const code = document.getElementById('accessCode').value;
-    const errorMsg = document.getElementById('errorMsg');
-
-    if (!name || !code) {
-        errorMsg.textContent = '⚠️ Please fill all fields.';
-        errorMsg.style.display = 'block';
-        return;
-    }
-
-    try {
-        const settings = await getSettings();
-        
-        if (code === settings.LoginCode) {
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', name);
-            localStorage.setItem('loginTime', Date.now());
-            
-            if (name.toLowerCase() === settings.AdminName.toLowerCase()) {
-                localStorage.setItem('isAdmin', 'true');
-            }
-            
-            window.location.href = 'main_page.html';
-        } else {
-            errorMsg.textContent = '❌ Invalid code. Please try again.';
-            errorMsg.style.display = 'block';
+        // ---------- THEME ----------
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
         }
-    } catch (e) {
-        errorMsg.textContent = '❌ Error: ' + e.message;
-        errorMsg.style.display = 'block';
-    }
-}
 
-// Event listeners
-document.getElementById('loginBtn').addEventListener('click', login);
-document.getElementById('accessCode').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') login();
-});
+        // ============================================================
+        // 1. GET SETTINGS (Login Code, Admin Code, Admin Name)
+        // ============================================================
+        async function getSettings() {
+            try {
+                const response = await fetch(`${SHEET_BEST_URL}/settings`);
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    return data[0];
+                }
+                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
+            } catch (e) {
+                console.error('Error getting settings:', e);
+                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
+            }
+        }
+
+        // ============================================================
+        // 2. GET USERS
+        // ============================================================
+        async function getUsers() {
+            try {
+                const response = await fetch(`${SHEET_BEST_URL}/users`);
+                return await response.json();
+            } catch (e) {
+                console.error('Error getting users:', e);
+                return [];
+            }
+        }
+
+        // ============================================================
+        // 3. ADD/UPDATE USER
+        // ============================================================
+        async function addUser(name) {
+            try {
+                const users = await getUsers();
+                const existingUser = users.find(u => u.Name?.toLowerCase() === name.toLowerCase());
+
+                if (!existingUser) {
+                    // New user - POST
+                    await fetch(`${SHEET_BEST_URL}/users`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            Name: name.trim(),
+                            LoginTime: new Date().toISOString(),
+                            IsAdmin: 'FALSE'
+                        })
+                    });
+                    console.log('✅ New user added:', name);
+                } else {
+                    // Existing user - UPDATE login time
+                    await fetch(`${SHEET_BEST_URL}/users/${existingUser.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            LoginTime: new Date().toISOString()
+                        })
+                    });
+                    console.log('🔄 User login time updated:', name);
+                }
+                return true;
+            } catch (e) {
+                console.error('Error adding user:', e);
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 4. LOGIN
+        // ============================================================
+        const loginBtn = document.getElementById('loginBtn');
+        const nameInput = document.getElementById('userName');
+        const accessInput = document.getElementById('accessCode');
+        const errorMsg = document.getElementById('errorMsg');
+
+        async function attemptLogin() {
+            const name = nameInput.value.trim();
+            const code = accessInput.value.trim();
+
+            if (!name) {
+                errorMsg.textContent = '⚠️ Please enter your name.';
+                errorMsg.classList.add('show');
+                nameInput.focus();
+                return;
+            }
+
+            if (!code) {
+                errorMsg.textContent = '⚠️ Please enter the access code.';
+                errorMsg.classList.add('show');
+                accessInput.focus();
+                return;
+            }
+
+            // Verify code from Sheet.best
+            const settings = await getSettings();
+            if (code !== settings.LoginCode) {
+                errorMsg.textContent = '❌ Invalid access code. Please try again.';
+                errorMsg.classList.add('show');
+                accessInput.value = '';
+                accessInput.focus();
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 3000);
+                return;
+            }
+
+            // Add/Update user
+            await addUser(name);
+
+            // Login successful
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('loginTime', Date.now());
+            localStorage.setItem('userName', name);
+
+            // Check if admin
+            if (name.toLowerCase() === settings.AdminName?.toLowerCase()) {
+                localStorage.setItem('isAdmin', 'true');
+                console.log('👑 Admin logged in:', name);
+            } else {
+                localStorage.setItem('isAdmin', 'false');
+                console.log('👤 User logged in:', name);
+            }
+
+            // Clear input fields
+            nameInput.value = '';
+            accessInput.value = '';
+
+            window.location.href = 'main_page.html';
+        }
+
+        loginBtn.addEventListener('click', attemptLogin);
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') accessInput.focus();
+        });
+        accessInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') attemptLogin();
+        });
+
+        // ============================================================
+        // 5. TOGGLE VISIBILITY
+        // ============================================================
+        const toggleBtn = document.getElementById('toggleVisibility');
+        let isVisible = false;
+
+        toggleBtn.addEventListener('click', () => {
+            isVisible = !isVisible;
+            accessInput.type = isVisible ? 'text' : 'password';
+            toggleBtn.textContent = isVisible ? '🙈' : '👁️';
+        });
+
+        // ============================================================
+        // 6. AUTO-LOGIN CHECK
+        // ============================================================
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const loginTimeCheck = parseInt(localStorage.getItem('loginTime') || '0');
+
+        if (isLoggedIn && (Date.now() - loginTimeCheck) < SESSION_DURATION) {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                window.location.href = 'main_page.html';
+            }
+        }
+
+        console.log('🔐 Sheet.best Login System Active');
+        console.log('📌 Default Login Code: 1234');
     </script>
 
 </body>

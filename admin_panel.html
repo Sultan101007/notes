@@ -15,6 +15,7 @@
             align-items: center;
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             padding: 20px;
+            transition: background 0.3s ease;
         }
         .admin-container {
             width: 100%; max-width: 750px;
@@ -76,8 +77,9 @@
         .users-list { max-height: 280px; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; background: rgba(0, 0, 0, 0.15); }
         .users-list::-webkit-scrollbar { width: 4px; }
         .users-list::-webkit-scrollbar-thumb { background: rgba(129, 140, 248, 0.3); border-radius: 4px; }
-        .user-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+        .user-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); transition: 0.2s ease; }
         .user-item:last-child { border-bottom: none; }
+        .user-item:hover { background: rgba(255, 255, 255, 0.03); }
         .user-item .user-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .user-item .user-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #818cf8; }
         .user-item .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: rgba(129, 140, 248, 0.15); display: flex; align-items: center; justify-content: center; color: #a5b4fc; font-weight: 700; font-size: 13px; }
@@ -104,6 +106,53 @@
         .refresh-btn { background: rgba(129, 140, 248, 0.1); border: 1px solid rgba(129, 140, 248, 0.15); border-radius: 8px; padding: 6px 12px; color: #a5b4fc; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.3s ease; font-family: 'Inter', sans-serif; }
         .refresh-btn:hover { background: rgba(129, 140, 248, 0.2); }
         .online-count { color: #34d399; font-size: 12px; font-weight: 500; }
+
+        body.light-theme {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
+        }
+        body.light-theme .admin-container {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
+        }
+        body.light-theme .admin-container h1 { color: #1a1a2e; }
+        body.light-theme .admin-container .subtitle { color: #6b7280; }
+        body.light-theme .code-box { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.06); }
+        body.light-theme .code-box .label { color: #6b7280; }
+        body.light-theme .code-box .label .show-btn:hover { color: #1a1a2e; background: rgba(0, 0, 0, 0.04); }
+        body.light-theme .code-box .value { color: #4f46e5; }
+        body.light-theme .code-box .value.admin-code { color: #d97706; }
+        body.light-theme .code-box .value.hidden { color: #9ca3af; }
+        body.light-theme .admin-name-box { background: rgba(217, 119, 6, 0.06); border-color: rgba(217, 119, 6, 0.12); }
+        body.light-theme .admin-name-box .label { color: #6b7280; }
+        body.light-theme .admin-name-box .value { color: #d97706; }
+        body.light-theme .input-group input { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.08); color: #1a1a2e; }
+        body.light-theme .input-group input::placeholder { color: #9ca3af; }
+        body.light-theme .input-group input:focus { border-color: #4f46e5; background: rgba(0, 0, 0, 0.06); }
+        body.light-theme .input-group input.admin-input:focus { border-color: #d97706; }
+        body.light-theme .input-group input.admin-name-input:focus { border-color: #059669; }
+        body.light-theme .section-title { color: #6b7280; }
+        body.light-theme .users-list { border-color: rgba(0, 0, 0, 0.06); background: rgba(0, 0, 0, 0.03); }
+        body.light-theme .user-item { border-color: rgba(0, 0, 0, 0.04); }
+        body.light-theme .user-item:hover { background: rgba(0, 0, 0, 0.03); }
+        body.light-theme .user-item .user-name { color: #1a1a2e; }
+        body.light-theme .user-item .user-time { color: #9ca3af; }
+        body.light-theme .btn-secondary { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.08); color: #4b5563; }
+        body.light-theme .btn-secondary:hover { background: rgba(0, 0, 0, 0.08); color: #1a1a2e; }
+        body.light-theme .footer-text { color: #9ca3af; }
+        body.light-theme .footer-text span { color: #4f46e5; }
+        body.light-theme .back-row { border-color: rgba(0, 0, 0, 0.06); }
+        body.light-theme .select-all-row .left label { color: #4b5563; }
+        body.light-theme .refresh-btn { background: rgba(79, 70, 229, 0.06); border-color: rgba(79, 70, 229, 0.12); color: #4f46e5; }
+        body.light-theme .refresh-btn:hover { background: rgba(79, 70, 229, 0.12); }
+        @media (max-width: 600px) {
+            .admin-container { padding: 24px 18px; }
+            .code-grid { grid-template-columns: 1fr; }
+            .back-row { flex-direction: column; align-items: stretch; }
+            .select-all-row { flex-direction: column; align-items: stretch; }
+            .select-all-row .right { justify-content: stretch; }
+            .select-all-row .right button { flex: 1; }
+        }
     </style>
 </head>
 <body>
@@ -208,20 +257,29 @@
 
     <script>
         // ============================================================
-        // 🔥 APPS SCRIPT WEB APP URL (Already Added)
+        // 🔥 APNI API URL YAHAN DAALEIN
         // ============================================================
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9jhM1X_8t_Hr5iYkWeP6Mbszp6TMFrAoN_8L465EudxYwjkmp-KBfeBr-S-1t1UwtJA/exec';
+        const SHEET_BEST_URL = 'https://api.sheetbest.com/sheets/ef6dfc82-a0d0-4861-a343-c837c6b62dc7';
 
         const SESSION_DURATION = 24 * 60 * 60 * 1000;
+
+        // ---------- THEME ----------
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+        }
 
         // ============================================================
         // 1. GET SETTINGS
         // ============================================================
         async function getSettings() {
             try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=getSettings`);
+                const response = await fetch(`${SHEET_BEST_URL}/settings`);
                 const data = await response.json();
-                return data;
+                if (data && data.length > 0) {
+                    return data[0];
+                }
+                return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
             } catch (e) {
                 console.error('Error getting settings:', e);
                 return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Sultan' };
@@ -229,124 +287,193 @@
         }
 
         // ============================================================
-        // 2. UPDATE SETTINGS
+        // 2. SAVE SETTINGS
         // ============================================================
-        async function updateSettings(loginCode, adminCode, adminName) {
+        async function saveSettings(settings) {
             try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=updateSettings&loginCode=${loginCode}&adminCode=${adminCode}&adminName=${adminName}`);
-                return await response.json();
+                // First get existing settings to get the ID
+                const response = await fetch(`${SHEET_BEST_URL}/settings`);
+                const data = await response.json();
+                
+                if (data && data.length > 0) {
+                    // Update existing
+                    const id = data[0].id;
+                    await fetch(`${SHEET_BEST_URL}/settings/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(settings)
+                    });
+                } else {
+                    // Create new
+                    await fetch(`${SHEET_BEST_URL}/settings`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(settings)
+                    });
+                }
+                console.log('✅ Settings saved to Sheet.best');
+                return true;
             } catch (e) {
-                console.error('Error updating settings:', e);
-                return { error: e.toString() };
+                console.error('Error saving settings:', e);
+                return false;
             }
         }
 
         // ============================================================
         // 3. GET USERS
         // ============================================================
-       async function getUsers() {
-    try {
-        const response = await fetch(`${APPS_SCRIPT_URL}?action=getUsers`);
-        const data = await response.json();
-        console.log('📋 Users data:', data);
-        
-        // Agar data array hai toh return karo, nahi toh empty array
-        if (Array.isArray(data)) {
-            return data;
-        } else {
-            console.warn('⚠️ Users data is not an array:', data);
-            return [];
-        }
-    } catch (e) {
-        console.error('Error getting users:', e);
-        return [];
-    }
-}
-
-        // ============================================================
-        // 4. LOGOUT USER
-        // ============================================================
-        async function logoutUser(name) {
+        async function getUsers() {
             try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=logoutUser&name=${encodeURIComponent(name)}`);
+                const response = await fetch(`${SHEET_BEST_URL}/users`);
                 return await response.json();
             } catch (e) {
-                console.error('Error logging out user:', e);
-                return { error: e.toString() };
+                console.error('Error getting users:', e);
+                return [];
             }
         }
 
         // ============================================================
-        // 5. RENDER USERS
+        // 4. UPDATE USER LOGIN TIME (for logout)
         // ============================================================
-async function renderUsers() {
-    try {
-        const users = await getUsers();
-        const settings = await getSettings();
-        const container = document.getElementById('usersList');
-        const countEl = document.getElementById('userCount');
-        const onlineCountEl = document.getElementById('onlineCount');
-
-        // Ensure users is an array
-        if (!Array.isArray(users)) {
-            console.warn('⚠️ Users is not an array, using empty array');
-            container.innerHTML = '<div class="empty-users">No users registered yet</div>';
-            countEl.textContent = '0';
-            onlineCountEl.textContent = '🟢 0 online';
-            return;
+        async function updateUserLoginTime(name, time) {
+            try {
+                const users = await getUsers();
+                const user = users.find(u => u.Name?.toLowerCase() === name.toLowerCase());
+                if (user && user.id) {
+                    await fetch(`${SHEET_BEST_URL}/users/${user.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ LoginTime: time })
+                    });
+                    return true;
+                }
+                return false;
+            } catch (e) {
+                console.error('Error updating user:', e);
+                return false;
+            }
         }
 
-        countEl.textContent = users.length;
-
-        let onlineCount = 0;
-        users.forEach(u => {
-            const loginTime = new Date(u.LoginTime).getTime();
-            if ((Date.now() - loginTime) < SESSION_DURATION) onlineCount++;
-        });
-        onlineCountEl.textContent = `🟢 ${onlineCount} online`;
-
-        if (users.length === 0) {
-            container.innerHTML = '<div class="empty-users">No users registered yet</div>';
-            return;
-        }
-
-        let html = '';
-        users.forEach((user) => {
-            const isAdmin = user.Name?.toLowerCase() === settings.AdminName?.toLowerCase();
-            const initial = user.Name?.charAt(0).toUpperCase() || '?';
-            const time = user.LoginTime ? new Date(user.LoginTime).toLocaleString() : 'Never';
-            const isLoggedIn = user.LoginTime ? (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION : false;
-
-            html += `
-                <div class="user-item">
-                    <div class="user-left">
-                        <input type="checkbox" class="user-checkbox" data-name="${user.Name}" ${isAdmin ? 'disabled' : ''} />
-                        <div class="user-avatar">${initial}</div>
-                        <span class="user-name">${user.Name}</span>
-                        ${isAdmin ? '<span class="user-badge admin">👑 Admin</span>' : ''}
-                        <span class="user-status ${isLoggedIn ? '' : 'logged-out'}">${isLoggedIn ? '🟢 Online' : '🔴 Offline'}</span>
-                    </div>
-                    <div class="user-actions">
-                        <span class="user-time">${time}</span>
-                    </div>
-                </div>
-            `;
-        });
-
-        container.innerHTML = html;
-
-        const allCheckboxes = document.querySelectorAll('.user-checkbox:not(:disabled)');
-        const checkedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
-        const selectAll = document.getElementById('selectAllUsers');
-        if (allCheckboxes.length > 0) {
-            selectAll.checked = allCheckboxes.length === checkedCheckboxes.length;
-        }
-    } catch (e) {
-        console.error('Error rendering users:', e);
-    }
-}
         // ============================================================
-        // 6. SELECT ALL
+        // 5. LOGOUT FUNCTIONS
+        // ============================================================
+        async function logoutSelectedUsers() {
+            const checkboxes = document.querySelectorAll('.user-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('⚠️ Please select at least one user.');
+                return;
+            }
+            if (!confirm(`Logout ${checkboxes.length} selected user(s)?`)) return;
+
+            const selectedNames = Array.from(checkboxes).map(cb => cb.dataset.name);
+            const expiredTime = new Date(Date.now() - SESSION_DURATION - 10000).toISOString();
+            
+            let loggedOutCount = 0;
+            for (const name of selectedNames) {
+                await updateUserLoginTime(name, expiredTime);
+                loggedOutCount++;
+            }
+
+            const currentUser = localStorage.getItem('userName');
+            if (selectedNames.includes(currentUser)) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('loginTime');
+                alert(`✅ ${loggedOutCount} user(s) logged out. You have been logged out as well.`);
+                window.location.href = 'login.html';
+                return;
+            }
+
+            await renderUsers();
+            alert(`✅ ${loggedOutCount} user(s) logged out successfully.`);
+        }
+
+        async function logoutAllUsers() {
+            if (!confirm('⚠️ Are you sure you want to logout ALL users?')) return;
+            
+            const users = await getUsers();
+            const expiredTime = new Date(Date.now() - SESSION_DURATION - 10000).toISOString();
+            
+            for (const user of users) {
+                if (user.id) {
+                    await fetch(`${SHEET_BEST_URL}/users/${user.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ LoginTime: expiredTime })
+                    });
+                }
+            }
+
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('loginTime');
+            
+            await renderUsers();
+            alert('✅ All users have been logged out successfully.');
+            window.location.href = 'login.html';
+        }
+
+        // ============================================================
+        // 6. RENDER USERS LIST
+        // ============================================================
+        async function renderUsers() {
+            try {
+                const users = await getUsers();
+                const settings = await getSettings();
+                const container = document.getElementById('usersList');
+                const countEl = document.getElementById('userCount');
+                const onlineCountEl = document.getElementById('onlineCount');
+
+                countEl.textContent = users.length;
+
+                let onlineCount = 0;
+                users.forEach(u => {
+                    const loginTime = new Date(u.LoginTime).getTime();
+                    if ((Date.now() - loginTime) < SESSION_DURATION) onlineCount++;
+                });
+                onlineCountEl.textContent = `🟢 ${onlineCount} online`;
+
+                if (users.length === 0) {
+                    container.innerHTML = '<div class="empty-users">No users registered yet</div>';
+                    return;
+                }
+
+                let html = '';
+                users.forEach((user) => {
+                    const isAdmin = user.Name?.toLowerCase() === settings.AdminName?.toLowerCase();
+                    const initial = user.Name?.charAt(0).toUpperCase() || '?';
+                    const time = user.LoginTime ? new Date(user.LoginTime).toLocaleString() : 'Never';
+                    const isLoggedIn = user.LoginTime ? (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION : false;
+
+                    html += `
+                        <div class="user-item">
+                            <div class="user-left">
+                                <input type="checkbox" class="user-checkbox" data-name="${user.Name}" ${isAdmin ? 'disabled' : ''} />
+                                <div class="user-avatar">${initial}</div>
+                                <span class="user-name">${user.Name}</span>
+                                ${isAdmin ? '<span class="user-badge admin">👑 Admin</span>' : ''}
+                                <span class="user-status ${isLoggedIn ? '' : 'logged-out'}">${isLoggedIn ? '🟢 Online' : '🔴 Offline'}</span>
+                            </div>
+                            <div class="user-actions">
+                                <span class="user-time">${time}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+                const allCheckboxes = document.querySelectorAll('.user-checkbox:not(:disabled)');
+                const checkedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
+                const selectAll = document.getElementById('selectAllUsers');
+                if (allCheckboxes.length > 0) {
+                    selectAll.checked = allCheckboxes.length === checkedCheckboxes.length;
+                }
+            } catch (e) {
+                console.error('Error rendering users:', e);
+            }
+        }
+
+        // ============================================================
+        // 7. SELECT ALL
         // ============================================================
         document.getElementById('selectAllUsers').addEventListener('change', function() {
             document.querySelectorAll('.user-checkbox:not(:disabled)').forEach(cb => {
@@ -355,7 +482,7 @@ async function renderUsers() {
         });
 
         // ============================================================
-        // 7. REFRESH
+        // 8. REFRESH
         // ============================================================
         document.getElementById('refreshUsersBtn').addEventListener('click', function() {
             renderUsers();
@@ -366,7 +493,7 @@ async function renderUsers() {
         });
 
         // ============================================================
-        // 8. CHANGE LOGIN CODE
+        // 9. CHANGE LOGIN CODE
         // ============================================================
         document.getElementById('changeLoginCodeBtn').addEventListener('click', async function() {
             const newCode = document.getElementById('newLoginCode').value.trim();
@@ -387,12 +514,19 @@ async function renderUsers() {
 
             const settings = await getSettings();
             settings.LoginCode = newCode;
-            await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName);
+            await saveSettings(settings);
 
             // Logout all users
             const users = await getUsers();
+            const expiredTime = new Date(Date.now() - SESSION_DURATION - 10000).toISOString();
             for (const user of users) {
-                await logoutUser(user.Name);
+                if (user.id) {
+                    await fetch(`${SHEET_BEST_URL}/users/${user.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ LoginTime: expiredTime })
+                    });
+                }
             }
 
             messageEl.className = 'message success';
@@ -408,7 +542,7 @@ async function renderUsers() {
         });
 
         // ============================================================
-        // 9. CHANGE ADMIN CODE
+        // 10. CHANGE ADMIN CODE
         // ============================================================
         document.getElementById('changeAdminCodeBtn').addEventListener('click', async function() {
             const newCode = document.getElementById('newAdminCode').value.trim();
@@ -429,7 +563,7 @@ async function renderUsers() {
 
             const settings = await getSettings();
             settings.AdminCode = newCode;
-            await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName);
+            await saveSettings(settings);
 
             messageEl.className = 'message success';
             messageEl.textContent = `✅ Admin code changed to "${newCode}"!`;
@@ -443,7 +577,7 @@ async function renderUsers() {
         });
 
         // ============================================================
-        // 10. CHANGE ADMIN NAME
+        // 11. CHANGE ADMIN NAME
         // ============================================================
         document.getElementById('changeAdminNameBtn').addEventListener('click', async function() {
             const newName = document.getElementById('newAdminName').value.trim();
@@ -466,7 +600,7 @@ async function renderUsers() {
 
             const settings = await getSettings();
             settings.AdminName = newName;
-            await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName);
+            await saveSettings(settings);
 
             document.getElementById('currentAdminName').textContent = newName;
 
@@ -486,7 +620,7 @@ async function renderUsers() {
         });
 
         // ============================================================
-        // 11. SHOW/HIDE CODES
+        // 12. SHOW/HIDE CODES
         // ============================================================
         let loginVisible = false;
         let adminVisible = false;
@@ -524,53 +658,13 @@ async function renderUsers() {
         });
 
         // ============================================================
-        // 12. LOGOUT FUNCTIONS
+        // 13. EVENT LISTENERS
         // ============================================================
-        document.getElementById('logoutSelectedBtn').addEventListener('click', async function() {
-            const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-            if (checkboxes.length === 0) {
-                alert('⚠️ Please select at least one user.');
-                return;
-            }
-            if (!confirm(`Logout ${checkboxes.length} selected user(s)?`)) return;
-
-            const selectedNames = Array.from(checkboxes).map(cb => cb.dataset.name);
-            
-            for (const name of selectedNames) {
-                await logoutUser(name);
-            }
-
-            const currentUser = localStorage.getItem('userName');
-            if (selectedNames.includes(currentUser)) {
-                localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('loginTime');
-                alert(`✅ ${selectedNames.length} user(s) logged out. You have been logged out as well.`);
-                window.location.href = 'login.html';
-                return;
-            }
-
-            renderUsers();
-            alert(`✅ ${selectedNames.length} user(s) logged out successfully.`);
-        });
-
-        document.getElementById('logoutAllBtn').addEventListener('click', async function() {
-            if (!confirm('⚠️ Are you sure you want to logout ALL users?')) return;
-            
-            const users = await getUsers();
-            for (const user of users) {
-                await logoutUser(user.Name);
-            }
-
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('loginTime');
-            
-            renderUsers();
-            alert('✅ All users have been logged out successfully.');
-            window.location.href = 'login.html';
-        });
+        document.getElementById('logoutSelectedBtn').addEventListener('click', logoutSelectedUsers);
+        document.getElementById('logoutAllBtn').addEventListener('click', logoutAllUsers);
 
         // ============================================================
-        // 13. SECURITY CHECK
+        // 14. SECURITY CHECK
         // ============================================================
         async function checkAdminAccess() {
             const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
@@ -590,7 +684,7 @@ async function renderUsers() {
         }
 
         // ============================================================
-        // 14. INIT
+        // 15. INIT
         // ============================================================
         async function init() {
             await checkAdminAccess();
@@ -603,7 +697,7 @@ async function renderUsers() {
             // Auto-refresh every 5 seconds
             setInterval(renderUsers, 5000);
             
-            console.log('🛡️ Admin Panel Active');
+            console.log('🛡️ Sheet.best Admin Panel Active');
             console.log('👑 Admin Name:', settings.AdminName);
         }
 
