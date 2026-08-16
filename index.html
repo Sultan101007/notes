@@ -1138,7 +1138,7 @@
     <!-- ============================================================ -->
     <!-- DOWNLOAD MODAL -->
     <!-- ============================================================ -->
-    <div class="modal-overlay" id="downloadModal">
+    <!-- <div class="modal-overlay" id="downloadModal">
         <div class="modal-content">
             <h2>🔑 Enter Password</h2>
             <p>Enter download password to continue</p>
@@ -1149,7 +1149,7 @@
             </div>
             <div class="error-msg" id="downloadError">❌ Invalid password. Please try again.</div>
         </div>
-    </div>
+    </div> -->
 
 </div>
 
@@ -1647,14 +1647,19 @@
     let downloadChapterName = '';
 
     function showDownloadModal(classNum, chapterId, chapterName) {
-        downloadClass = classNum;
-        downloadChapter = chapterId;
-        downloadChapterName = chapterName;
-        document.getElementById('downloadModal').classList.add('active');
-        document.getElementById('downloadPasswordInput').value = '';
-        document.getElementById('downloadError').classList.remove('show');
-        document.getElementById('downloadPasswordInput').focus();
-    }
+    downloadClass = classNum;
+    downloadChapter = chapterId;
+    downloadChapterName = chapterName;
+    
+    const pdfUrl = `${downloadClass}${downloadChapter}.pdf`;
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = `${downloadClass}_${downloadChapter}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('✅ Download started!', 'success');
+}
 
     function hideDownloadModal() {
         document.getElementById('downloadModal').classList.remove('active');
@@ -2047,26 +2052,26 @@
         });
 
         document.getElementById('downloadPdfBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            const classNum = document.getElementById('chapterActionsTitle').dataset.class || '10';
-            const chapterId = document.getElementById('chapterActionsTitle').dataset.chapter || 'light';
-            const chapterName = document.getElementById('chapterActionsTitle').textContent;
-            showDownloadModal(classNum, chapterId, chapterName);
-        });
+    e.preventDefault();
+    const classNum = document.getElementById('chapterActionsTitle').dataset.class || '10';
+    const chapterId = document.getElementById('chapterActionsTitle').dataset.chapter || 'light';
+    const chapterName = document.getElementById('chapterActionsTitle').textContent;
+    showDownloadModal(classNum, chapterId, chapterName); // ✅ Yehi call hoga
+});
 
         // ===== PDF VIEWER =====
         document.getElementById('pdfViewerBackBtn').addEventListener('click', closePdfViewer);
         document.getElementById('pdfViewerThemeToggle').addEventListener('click', toggleTheme);
 
-        // ===== DOWNLOAD MODAL =====
-        document.getElementById('downloadConfirmBtn').addEventListener('click', handleDownload);
-        document.getElementById('downloadPasswordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') handleDownload();
-        });
-        document.getElementById('downloadCancelBtn').addEventListener('click', hideDownloadModal);
-        document.getElementById('downloadModal').addEventListener('click', function(e) {
-            if (e.target === this) hideDownloadModal();
-        });
+        // // ===== DOWNLOAD MODAL =====
+        // document.getElementById('downloadConfirmBtn').addEventListener('click', handleDownload);
+        // document.getElementById('downloadPasswordInput').addEventListener('keypress', function(e) {
+        //     if (e.key === 'Enter') handleDownload();
+        // });
+        // document.getElementById('downloadCancelBtn').addEventListener('click', hideDownloadModal);
+        // document.getElementById('downloadModal').addEventListener('click', function(e) {
+        //     if (e.target === this) hideDownloadModal();
+        // });
 
         // ===== ADMIN PANEL =====
         document.getElementById('adminPanelBackBtn').addEventListener('click', function() {
