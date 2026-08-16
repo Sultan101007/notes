@@ -960,37 +960,37 @@
         </div>
 
         <div class="grid" id="subjectsGrid">
-            <a href="#" class="card" data-subject="science">
+            <a href="10science.pdf" class="card" data-subject="science">
                 <div class="icon">🔬</div>
                 <div class="title">Science</div>
                 <div class="sub">Physics • Chemistry • Biology</div>
             </a>
-            <a href="#" class="card" data-subject="maths">
+            <a href="10maths.pdf" class="card" data-subject="maths">
                 <div class="icon">📐</div>
                 <div class="title">Mathematics</div>
                 <div class="sub">Algebra • Geometry • Stats</div>
             </a>
-            <a href="#" class="card" data-subject="english">
+            <a href="10english.pdf" class="card" data-subject="english">
                 <div class="icon">📖</div>
                 <div class="title">English</div>
                 <div class="sub">Literature • Grammar</div>
             </a>
-            <a href="#" class="card" data-subject="social">
+            <a href="10social.pdf" class="card" data-subject="social">
                 <div class="icon">🌍</div>
                 <div class="title">Social Studies</div>
                 <div class="sub">History • Geography • Civics</div>
             </a>
-            <a href="#" class="card" data-subject="hindi">
+            <a href="10hindi.pdf" class="card" data-subject="hindi">
                 <div class="icon">📝</div>
                 <div class="title">Hindi</div>
                 <div class="sub">Grammar • Literature</div>
             </a>
-            <a href="#" class="card" data-subject="sanskrit">
+            <a href="10sanskrit.pdf" class="card" data-subject="sanskrit">
                 <div class="icon">🕉️</div>
                 <div class="title">Sanskrit</div>
                 <div class="sub">Grammar • Literature</div>
             </a>
-            <a href="#" class="card" data-subject="computer">
+            <a href="10computer.pdf" class="card" data-subject="computer">
                 <div class="icon">💻</div>
                 <div class="title">Computer</div>
                 <div class="sub">Programming • IT</div>
@@ -1527,7 +1527,7 @@
     let pdfViewerActive = false;
 
     function viewPdf(classNum, subject) {
-        const pdfUrl = `pdfs/${classNum}/${subject}.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
+        const pdfUrl = `${classNum}${subject}.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
 
         document.getElementById('pdfViewerBadge').textContent = `Class ${classNum} - ${subject.charAt(0).toUpperCase() + subject.slice(1)}`;
 
@@ -1634,7 +1634,7 @@
         const correctPassword = getDownloadPassword();
 
         if (password === correctPassword) {
-            const pdfUrl = `pdfs/${downloadClass}/${downloadSubject}.pdf`;
+            const pdfUrl = `${downloadClass}${downloadSubject}.pdf`;
             const link = document.createElement('a');
             link.href = pdfUrl;
             link.download = `${downloadClass}_${downloadSubject}.pdf`;
