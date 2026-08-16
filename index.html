@@ -2,132 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NCERT Notes - Science</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ============================================================
-           GLASSMORPHISM 3D THEME
-           ============================================================ */
+        /* ===== RESET & BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0c0c1d 0%, #1a1035 30%, #2d1b4e 60%, #1a0b2e 100%);
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             padding: 20px;
             transition: background 0.3s ease;
-            position: relative;
-            overflow-x: hidden;
         }
-        
-        /* Animated floating orbs */
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            z-index: 0;
-            pointer-events: none;
-            animation: floatOrb 15s ease-in-out infinite alternate;
-        }
-        body::before {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.4), rgba(124, 58, 237, 0.0));
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
-        }
-        body::after {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(244, 114, 182, 0.3), rgba(244, 114, 182, 0.0));
-            bottom: -150px;
-            right: -150px;
-            animation-delay: -5s;
-        }
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 80px) scale(1.2); }
-        }
-        
-        /* Third orb */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.2;
-            z-index: 0;
-            pointer-events: none;
-            animation: floatOrb 20s ease-in-out infinite alternate;
-        }
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.3), rgba(56, 189, 248, 0.0));
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -10s;
-        }
-        
         body.light-theme {
-            background: linear-gradient(135deg, #e8e0f0 0%, #f0ecf8 30%, #f8f4ff 60%, #f0ecf8 100%);
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 50%, #fce4ec 100%);
         }
-        body.light-theme::before {
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.0));
-        }
-        body.light-theme::after {
-            background: radial-gradient(circle, rgba(244, 114, 182, 0.12), rgba(244, 114, 182, 0.0));
-        }
-        
         .container {
             width: 100%;
             max-width: 1100px;
-            background: rgba(20, 10, 40, 0.35);
-            backdrop-filter: blur(32px) saturate(1.4);
-            -webkit-backdrop-filter: blur(32px) saturate(1.4);
+            background: rgba(30, 30, 50, 0.85);
+            backdrop-filter: blur(20px);
             border-radius: 48px;
             padding: 40px 36px 50px;
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-                0 0 40px rgba(124, 58, 237, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.08);
             transition: all 0.3s ease;
             position: relative;
-            z-index: 1;
         }
-        
-        /* Glass shine effect */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            border-radius: 48px 48px 0 0;
-            pointer-events: none;
-        }
-        
         body.light-theme .container {
-            background: rgba(255, 255, 255, 0.30);
-            backdrop-filter: blur(32px) saturate(1.6);
-            -webkit-backdrop-filter: blur(32px) saturate(1.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.06),
-                0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+            background: rgba(255,255,255,0.7);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.10);
         }
-        
         /* ===== TOP BAR ===== */
         .top-bar {
             display: flex;
@@ -150,66 +60,65 @@
             font-size: 24px;
             font-weight: 800;
             color: #f1f5f9;
-            text-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
         }
-        body.light-theme .logo { color: #1a0b2e; text-shadow: none; }
+        body.light-theme .logo { color: #1a1a2e; }
         .logo span {
-            background: linear-gradient(135deg, #c4b5fd, #a78bfa, #f472b6);
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #f472b6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .logo .logo-icon {
-            font-size: 32px;
-            filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.2));
+        body.light-theme .logo span {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .user-info {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.06);
             padding: 6px 14px 6px 10px;
             border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255,255,255,0.06);
         }
         body.light-theme .user-info {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.06);
         }
         .user-avatar {
             width: 28px; height: 28px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            background: rgba(129,140,248,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #a5b4fc;
             font-weight: 700;
             font-size: 13px;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
         }
         body.light-theme .user-avatar {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            background: rgba(79,70,229,0.1);
+            color: #4f46e5;
         }
         .user-name-text {
-            color: rgba(255, 255, 255, 0.8);
+            color: #94a3b8;
             font-size: 13px;
             font-weight: 500;
         }
-        body.light-theme .user-name-text { color: #1a0b2e; }
+        body.light-theme .user-name-text { color: #4b5563; }
         .admin-badge {
             font-size: 10px;
             padding: 2px 8px;
             border-radius: 100px;
-            background: rgba(244, 114, 182, 0.15);
-            color: #f472b6;
+            background: rgba(245,158,11,0.15);
+            color: #fbbf24;
             font-weight: 600;
-            border: 1px solid rgba(244, 114, 182, 0.1);
         }
         body.light-theme .admin-badge {
-            background: rgba(236, 72, 153, 0.08);
-            color: #db2777;
+            background: rgba(245,158,11,0.1);
+            color: #d97706;
         }
         .top-bar-right {
             display: flex;
@@ -220,86 +129,90 @@
         .btn {
             padding: 8px 16px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s ease;
             font-family: 'Inter', sans-serif;
-            backdrop-filter: blur(8px);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.8);
         }
-        .btn:hover { transform: scale(1.04); background: rgba(255, 255, 255, 0.1); }
-        body.light-theme .btn {
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #1a0b2e;
-        }
-        body.light-theme .btn:hover { background: rgba(255, 255, 255, 0.5); }
+        .btn:hover { transform: scale(1.04); }
         .btn-logout {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.08);
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.2);
             color: #f87171;
         }
-        .btn-logout:hover { background: rgba(239, 68, 68, 0.15); }
+        .btn-logout:hover { background: rgba(239,68,68,0.25); }
         body.light-theme .btn-logout {
-            background: rgba(239, 68, 68, 0.06);
+            background: rgba(239,68,68,0.08);
+            border-color: rgba(239,68,68,0.15);
             color: #dc2626;
         }
+        body.light-theme .btn-logout:hover { background: rgba(239,68,68,0.15); }
         .btn-admin {
-            background: rgba(124, 58, 237, 0.08);
-            border: 1px solid rgba(124, 58, 237, 0.08);
-            color: #a78bfa;
+            background: rgba(245,158,11,0.12);
+            border: 1px solid rgba(245,158,11,0.15);
+            color: #fbbf24;
         }
-        .btn-admin:hover { background: rgba(124, 58, 237, 0.15); }
+        .btn-admin:hover { background: rgba(245,158,11,0.2); }
         body.light-theme .btn-admin {
-            background: rgba(124, 58, 237, 0.06);
-            color: #6d28d9;
+            background: rgba(245,158,11,0.08);
+            border-color: rgba(245,158,11,0.15);
+            color: #d97706;
         }
+        body.light-theme .btn-admin:hover { background: rgba(245,158,11,0.15); }
         .btn-theme {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50%;
             width: 40px; height: 40px;
             font-size: 18px;
+            color: #f1f5f9;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        .btn-theme:hover { background: rgba(255,255,255,0.15); transform: scale(1.08); }
+        body.light-theme .btn-theme {
+            background: rgba(255,255,255,0.6);
+            border-color: rgba(255,255,255,0.8);
+            color: #1a1a2e;
+        }
+        body.light-theme .btn-theme:hover { background: rgba(255,255,255,0.9); }
         .btn-back {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
             text-decoration: none;
         }
-        .btn-back:hover { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.9); transform: translateX(-4px); }
+        .btn-back:hover { background: rgba(255,255,255,0.15); color: #f1f5f9; transform: translateX(-4px); }
         body.light-theme .btn-back {
-            background: rgba(255, 255, 255, 0.2);
-            color: #4c1d95;
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.08);
+            color: #4b5563;
         }
-        body.light-theme .btn-back:hover { background: rgba(255, 255, 255, 0.4); color: #1a0b2e; }
+        body.light-theme .btn-back:hover { background: rgba(0,0,0,0.08); color: #1a1a2e; }
         .class-badge {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.8);
+            background: rgba(129,140,248,0.15);
+            color: #a5b4fc;
             font-weight: 700;
             font-size: 14px;
             padding: 6px 18px;
             border-radius: 100px;
+            border: 1px solid rgba(129,140,248,0.2);
         }
         body.light-theme .class-badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: #4c1d95;
+            background: rgba(79,70,229,0.10);
+            color: #4f46e5;
+            border-color: rgba(79,70,229,0.2);
         }
         .readonly-badge {
             color: #34d399;
             font-size: 13px;
             font-weight: 600;
-            background: rgba(52, 211, 153, 0.08);
+            background: rgba(16,185,129,0.12);
             padding: 4px 12px;
             border-radius: 100px;
-            border: 1px solid rgba(52, 211, 153, 0.06);
         }
         /* ===== HEADING ===== */
         .heading-section {
@@ -308,10 +221,8 @@
         }
         .heading-section .sub-badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.6);
+            background: rgba(129,140,248,0.15);
+            color: #a5b4fc;
             font-weight: 600;
             font-size: 13px;
             letter-spacing: 1px;
@@ -321,8 +232,8 @@
             text-transform: uppercase;
         }
         body.light-theme .heading-section .sub-badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: #4c1d95;
+            background: rgba(79,70,229,0.12);
+            color: #4f46e5;
         }
         .heading-section h1 {
             font-size: 44px;
@@ -331,11 +242,16 @@
             letter-spacing: -1.5px;
             line-height: 1.1;
             transition: color 0.3s ease;
-            text-shadow: 0 0 40px rgba(124, 58, 237, 0.1);
         }
-        body.light-theme .heading-section h1 { color: #1a0b2e; text-shadow: none; }
+        body.light-theme .heading-section h1 { color: #1a1a2e; }
         .heading-section h1 .highlight {
-            background: linear-gradient(135deg, #c4b5fd, #a78bfa, #f472b6);
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        body.light-theme .heading-section h1 .highlight {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -346,13 +262,19 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        body.light-theme .heading-section h1 .class-number {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
         .heading-section p {
-            color: rgba(255, 255, 255, 0.6);
+            color: #94a3b8;
             font-size: 17px;
             font-weight: 400;
             margin-top: 8px;
         }
-        body.light-theme .heading-section p { color: #4c1d95; }
+        body.light-theme .heading-section p { color: #6b7280; }
         /* ===== GRID ===== */
         .grid {
             display: grid;
@@ -384,58 +306,31 @@
             .heading-section h1 { font-size: 26px; }
             .container { padding: 20px 14px 30px; border-radius: 24px; }
         }
-        /* ===== CARDS - Glassmorphism 3D ===== */
+        /* ===== CARDS ===== */
         .card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px) saturate(1.4);
-            -webkit-backdrop-filter: blur(16px) saturate(1.4);
+            background: rgba(40,40,65,0.8);
+            backdrop-filter: blur(8px);
             border-radius: 24px;
             padding: 28px 16px 24px;
             text-align: center;
             text-decoration: none;
             color: inherit;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.15),
-                0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
             cursor: pointer;
             position: relative;
             overflow: hidden;
             display: block;
         }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 24px 24px 0 0;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        .card:hover::before { opacity: 1; }
         .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 
-                0 24px 60px rgba(124, 58, 237, 0.15),
-                0 0 0 1px rgba(124, 58, 237, 0.08) inset;
-            border-color: rgba(124, 58, 237, 0.12);
-            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 24px 60px rgba(129,140,248,0.12);
         }
         body.light-theme .card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(16px) saturate(1.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-        }
-        body.light-theme .card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(124, 58, 237, 0.1);
-            box-shadow: 0 24px 60px rgba(124, 58, 237, 0.06);
+            background: rgba(255,255,255,0.85);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.04);
         }
         .card .icon {
             font-size: 38px;
@@ -446,37 +341,45 @@
             justify-content: center;
             margin: 0 auto 14px;
             transition: 0.3s ease;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.04);
         }
         .card:hover .icon { transform: scale(1.06) rotate(-3deg); }
         .card .title {
             font-size: 17px;
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.95);
+            color: #f1f5f9;
             line-height: 1.3;
         }
-        body.light-theme .card .title { color: #1a0b2e; }
+        body.light-theme .card .title { color: #1a1a2e; }
         .card .sub {
             font-size: 13px;
             font-weight: 400;
-            color: rgba(255, 255, 255, 0.5);
+            color: #94a3b8;
             margin-top: 4px;
         }
-        body.light-theme .card .sub { color: #4c1d95; }
+        body.light-theme .card .sub { color: #6b7280; }
         /* Card Colors */
-        .card[data-class="9"] .icon { background: rgba(124, 58, 237, 0.08); color: #a78bfa; }
-        .card[data-class="10"] .icon { background: rgba(167, 139, 250, 0.08); color: #a78bfa; }
-        .card[data-class="11"] .icon { background: rgba(244, 114, 182, 0.08); color: #f472b6; }
-        .card[data-class="12"] .icon { background: rgba(124, 58, 237, 0.08); color: #8b5cf6; }
-        .card[data-chapter] .icon { background: rgba(124, 58, 237, 0.06); color: #a78bfa; }
+        .card[data-class="9"] .icon { background: rgba(37,99,235,0.25); color: #60a5fa; }
+        .card[data-class="9"]:hover { border-color: #3b82f6; }
+        .card[data-class="10"] .icon { background: rgba(5,150,105,0.25); color: #34d399; }
+        .card[data-class="10"]:hover { border-color: #10b981; }
+        .card[data-class="11"] .icon { background: rgba(217,119,6,0.25); color: #fbbf24; }
+        .card[data-class="11"]:hover { border-color: #f59e0b; }
+        .card[data-class="12"] .icon { background: rgba(124,58,237,0.25); color: #a78bfa; }
+        .card[data-class="12"]:hover { border-color: #8b5cf6; }
+        body.light-theme .card[data-class="9"] .icon { background: #dbeafe; color: #2563eb; }
+        body.light-theme .card[data-class="10"] .icon { background: #d1fae5; color: #059669; }
+        body.light-theme .card[data-class="11"] .icon { background: #fef3c7; color: #d97706; }
+        body.light-theme .card[data-class="12"] .icon { background: #ede9fe; color: #7c3aed; }
+        .card[data-chapter] .icon { background: rgba(16,185,129,0.15); color: #34d399; }
+        .card[data-chapter]:hover { border-color: #10b981; }
+        body.light-theme .card[data-chapter] .icon { background: #d1fae5; color: #059669; }
         /* ===== LOGIN FORM ===== */
         .login-container {
             max-width: 440px;
             margin: 0 auto;
             text-align: center;
         }
-        .login-container .lock-icon { font-size: 56px; margin-bottom: 16px; display: block; filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.2)); }
+        .login-container .lock-icon { font-size: 56px; margin-bottom: 16px; display: block; }
         .input-group {
             position: relative;
             margin-bottom: 16px;
@@ -484,18 +387,17 @@
         }
         .input-group label {
             display: block;
-            color: rgba(255, 255, 255, 0.6);
+            color: #94a3b8;
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 6px;
         }
-        body.light-theme .input-group label { color: #4c1d95; }
+        body.light-theme .input-group label { color: #4b5563; }
         .input-group input {
             width: 100%;
             padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
             border-radius: 14px;
             color: #f1f5f9;
             font-size: 16px;
@@ -504,65 +406,58 @@
             outline: none;
         }
         body.light-theme .input-group input {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #1a0b2e;
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.08);
+            color: #1a1a2e;
         }
         .input-group input:focus {
-            border-color: rgba(124, 58, 237, 0.2);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.05);
+            border-color: #818cf8;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 30px rgba(129,140,248,0.08);
         }
         body.light-theme .input-group input:focus {
-            border-color: rgba(124, 58, 237, 0.2);
-            background: rgba(255, 255, 255, 0.3);
+            border-color: #4f46e5;
+            background: rgba(0,0,0,0.06);
         }
+        .input-group input.admin-input:focus { border-color: #fbbf24; }
+        body.light-theme .input-group input.admin-input:focus { border-color: #d97706; }
         .input-group .toggle-visibility {
             position: absolute;
             right: 14px;
             bottom: 14px;
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.3);
+            color: #64748b;
             font-size: 18px;
             cursor: pointer;
             padding: 4px;
         }
-        .input-group .toggle-visibility:hover { color: rgba(255, 255, 255, 0.6); }
+        .input-group .toggle-visibility:hover { color: #94a3b8; }
         .btn-login {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.1));
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(124, 58, 237, 0.1);
+            background: linear-gradient(135deg, #818cf8, #7c3aed);
+            border: none;
             border-radius: 14px;
-            color: #f1f5f9;
+            color: white;
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s ease;
             font-family: 'Inter', sans-serif;
             margin-top: 8px;
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.05);
         }
-        .btn-login:hover { transform: translateY(-2px); background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(124, 58, 237, 0.15)); box-shadow: 0 8px 40px rgba(124, 58, 237, 0.1); }
-        body.light-theme .btn-login {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
-            color: #1a0b2e;
-            border: 1px solid rgba(124, 58, 237, 0.06);
-        }
-        body.light-theme .btn-login:hover { background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.1)); }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(129,140,248,0.25); }
         .btn-login.admin-login {
-            background: linear-gradient(135deg, rgba(244, 114, 182, 0.15), rgba(244, 114, 182, 0.05));
-            border: 1px solid rgba(244, 114, 182, 0.08);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e;
         }
-        .btn-login.admin-login:hover { background: linear-gradient(135deg, rgba(244, 114, 182, 0.25), rgba(244, 114, 182, 0.1)); }
+        .btn-login.admin-login:hover { box-shadow: 0 12px 40px rgba(251,191,36,0.25); }
         .btn-login.green {
-            background: linear-gradient(135deg, rgba(52, 211, 153, 0.12), rgba(52, 211, 153, 0.04));
-            border: 1px solid rgba(52, 211, 153, 0.06);
-            color: #34d399;
+            background: linear-gradient(135deg, #34d399, #10b981);
+            color: #1a1a2e;
         }
-        .btn-login.green:hover { background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.08)); }
+        .btn-login.green:hover { box-shadow: 0 12px 40px rgba(16,185,129,0.25); }
         .error-msg {
             color: #f87171;
             font-size: 14px;
@@ -572,15 +467,14 @@
         }
         .error-msg.show { display: block; }
         .admin-link { margin-top: 12px; font-size: 13px; }
-        .admin-link a { color: rgba(255, 255, 255, 0.5); text-decoration: none; font-weight: 600; }
-        .admin-link a:hover { text-decoration: underline; color: rgba(255, 255, 255, 0.8); }
-        body.light-theme .admin-link a { color: #4c1d95; }
-        body.light-theme .admin-link a:hover { color: #1a0b2e; }
+        .admin-link a { color: #818cf8; text-decoration: none; font-weight: 600; }
+        .admin-link a:hover { text-decoration: underline; }
+        body.light-theme .admin-link a { color: #4f46e5; }
         .back-link { margin-top: 12px; font-size: 13px; }
-        .back-link a { color: rgba(255, 255, 255, 0.3); text-decoration: none; font-weight: 500; }
-        .back-link a:hover { text-decoration: underline; color: rgba(255, 255, 255, 0.6); }
-        body.light-theme .back-link a { color: #4c1d95; }
-        body.light-theme .back-link a:hover { color: #1a0b2e; }
+        .back-link a { color: #94a3b8; text-decoration: none; font-weight: 500; }
+        .back-link a:hover { text-decoration: underline; color: #f1f5f9; }
+        body.light-theme .back-link a { color: #6b7280; }
+        body.light-theme .back-link a:hover { color: #1a1a2e; }
         /* ===== ADMIN PANEL ===== */
         .code-grid {
             display: grid;
@@ -590,43 +484,43 @@
         }
         @media (max-width: 600px) { .code-grid { grid-template-columns: 1fr; } }
         .code-box {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 12px;
             padding: 14px 16px;
         }
         body.light-theme .code-box {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.06);
         }
         .code-box .label {
-            color: rgba(255, 255, 255, 0.5);
+            color: #94a3b8;
             font-size: 12px;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        body.light-theme .code-box .label { color: #4c1d95; }
+        body.light-theme .code-box .label { color: #6b7280; }
         .code-box .label .show-btn {
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.2);
+            color: #64748b;
             cursor: pointer;
             font-size: 16px;
             padding: 2px 6px;
             border-radius: 4px;
         }
         .code-box .label .show-btn:hover {
-            color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.02);
+            color: #f1f5f9;
+            background: rgba(255,255,255,0.06);
         }
         body.light-theme .code-box .label .show-btn:hover {
-            color: #1a0b2e;
-            background: rgba(255, 255, 255, 0.1);
+            color: #1a1a2e;
+            background: rgba(0,0,0,0.04);
         }
         .code-box .value {
-            color: #a78bfa;
+            color: #a5b4fc;
             font-size: 18px;
             font-weight: 700;
             letter-spacing: 3px;
@@ -634,15 +528,14 @@
             display: block;
             font-family: 'Courier New', monospace;
         }
-        body.light-theme .code-box .value { color: #6d28d9; }
-        .code-box .value.admin-code { color: #f472b6; }
-        body.light-theme .code-box .value.admin-code { color: #db2777; }
-        .code-box .value.hidden { letter-spacing: 8px; color: rgba(255, 255, 255, 0.1); }
+        body.light-theme .code-box .value { color: #4f46e5; }
+        .code-box .value.admin-code { color: #fbbf24; }
+        body.light-theme .code-box .value.admin-code { color: #d97706; }
+        .code-box .value.hidden { letter-spacing: 8px; color: #475569; }
         body.light-theme .code-box .value.hidden { color: #9ca3af; }
         .admin-name-box {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.15);
             border-radius: 12px;
             padding: 12px 16px;
             margin-bottom: 16px;
@@ -651,91 +544,99 @@
             align-items: center;
         }
         body.light-theme .admin-name-box {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(217,119,6,0.06);
+            border-color: rgba(217,119,6,0.12);
         }
-        .admin-name-box .label { color: rgba(255, 255, 255, 0.5); font-size: 13px; font-weight: 600; }
-        body.light-theme .admin-name-box .label { color: #4c1d95; }
-        .admin-name-box .value { color: #f472b6; font-size: 18px; font-weight: 700; letter-spacing: 1px; }
-        body.light-theme .admin-name-box .value { color: #db2777; }
+        .admin-name-box .label { color: #94a3b8; font-size: 13px; font-weight: 600; }
+        body.light-theme .admin-name-box .label { color: #6b7280; }
+        .admin-name-box .value { color: #fbbf24; font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+        body.light-theme .admin-name-box .value { color: #d97706; }
         .section-title {
-            color: rgba(255, 255, 255, 0.4);
+            color: #94a3b8;
             font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin: 20px 0 12px;
         }
-        body.light-theme .section-title { color: #4c1d95; }
+        body.light-theme .section-title { color: #6b7280; }
         .users-list {
             max-height: 280px;
             overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(0,0,0,0.15);
         }
         body.light-theme .users-list {
-            border-color: rgba(255, 255, 255, 0.05);
-            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0,0,0,0.06);
+            background: rgba(0,0,0,0.03);
         }
         .users-list::-webkit-scrollbar { width: 4px; }
-        .users-list::-webkit-scrollbar-thumb { background: rgba(124, 58, 237, 0.2); border-radius: 4px; }
+        .users-list::-webkit-scrollbar-thumb { background: rgba(129,140,248,0.3); border-radius: 4px; }
         .user-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
         }
-        body.light-theme .user-item { border-color: rgba(255, 255, 255, 0.03); }
+        body.light-theme .user-item { border-color: rgba(0,0,0,0.04); }
         .user-item:last-child { border-bottom: none; }
-        .user-item:hover { background: rgba(255, 255, 255, 0.02); }
-        body.light-theme .user-item:hover { background: rgba(255, 255, 255, 0.05); }
+        .user-item:hover { background: rgba(255,255,255,0.03); }
+        body.light-theme .user-item:hover { background: rgba(0,0,0,0.03); }
         .user-item .user-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .user-item .user-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #7c3aed; }
+        .user-item .user-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #818cf8; }
         .user-item .user-avatar {
             width: 30px; height: 30px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            background: rgba(129,140,248,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: #a5b4fc;
             font-weight: 700;
             font-size: 13px;
         }
         body.light-theme .user-item .user-avatar {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            background: rgba(79,70,229,0.1);
+            color: #4f46e5;
         }
-        .user-item .user-name { color: rgba(255, 255, 255, 0.9); font-size: 14px; font-weight: 500; }
-        body.light-theme .user-item .user-name { color: #1a0b2e; }
+        .user-item .user-name { color: #f1f5f9; font-size: 14px; font-weight: 500; }
+        body.light-theme .user-item .user-name { color: #1a1a2e; }
         .user-item .user-badge {
             font-size: 9px;
             padding: 2px 8px;
             border-radius: 100px;
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(255, 255, 255, 0.3);
+            background: rgba(129,140,248,0.15);
+            color: #a5b4fc;
             font-weight: 600;
         }
         .user-item .user-badge.admin {
-            background: rgba(244, 114, 182, 0.06);
-            color: #f472b6;
+            background: rgba(245,158,11,0.15);
+            color: #fbbf24;
         }
-        body.light-theme .user-item .user-badge { background: rgba(255, 255, 255, 0.1); color: #4c1d95; }
-        body.light-theme .user-item .user-badge.admin { background: rgba(236, 72, 153, 0.04); color: #db2777; }
-        .user-item .user-time { color: rgba(255, 255, 255, 0.2); font-size: 10px; }
+        body.light-theme .user-item .user-badge {
+            background: rgba(79,70,229,0.1);
+            color: #4f46e5;
+        }
+        body.light-theme .user-item .user-badge.admin {
+            background: rgba(217,119,6,0.1);
+            color: #d97706;
+        }
+        .user-item .user-time { color: #64748b; font-size: 10px; }
         body.light-theme .user-item .user-time { color: #9ca3af; }
         .user-item .user-status {
             font-size: 10px;
             padding: 2px 8px;
             border-radius: 100px;
-            background: rgba(16, 185, 129, 0.04);
+            background: rgba(16,185,129,0.12);
             color: #34d399;
         }
         .user-item .user-status.logged-out {
-            background: rgba(239, 68, 68, 0.04);
+            background: rgba(239,68,68,0.12);
             color: #f87171;
         }
-        .empty-users { color: rgba(255, 255, 255, 0.2); font-size: 14px; text-align: center; padding: 30px; }
+        .empty-users { color: #64748b; font-size: 14px; text-align: center; padding: 30px; }
         .online-count { color: #34d399; font-size: 12px; font-weight: 500; }
         .select-all-row {
             display: flex;
@@ -746,13 +647,13 @@
             gap: 8px;
         }
         .select-all-row .left { display: flex; align-items: center; gap: 10px; }
-        .select-all-row .left label { color: rgba(255, 255, 255, 0.3); font-size: 13px; cursor: pointer; }
-        body.light-theme .select-all-row .left label { color: #4c1d95; }
-        .select-all-row .left input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #7c3aed; }
+        .select-all-row .left label { color: #94a3b8; font-size: 13px; cursor: pointer; }
+        body.light-theme .select-all-row .left label { color: #4b5563; }
+        .select-all-row .left input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #818cf8; }
         .select-all-row .right { display: flex; gap: 8px; flex-wrap: wrap; }
         .btn-danger {
-            background: rgba(239, 68, 68, 0.04);
-            border: 1px solid rgba(239, 68, 68, 0.04);
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.2);
             color: #f87171;
             padding: 8px 16px;
             border-radius: 8px;
@@ -762,28 +663,36 @@
             transition: 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
-        .btn-danger:hover { background: rgba(239, 68, 68, 0.08); }
+        .btn-danger:hover { background: rgba(239,68,68,0.3); }
         .back-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255,255,255,0.06);
             flex-wrap: wrap;
             gap: 10px;
         }
-        body.light-theme .back-row { border-color: rgba(255, 255, 255, 0.05); }
+        body.light-theme .back-row { border-color: rgba(0,0,0,0.06); }
         .footer-text {
             text-align: center;
             margin-top: 24px;
-            color: rgba(255, 255, 255, 0.15);
+            color: #475569;
             font-size: 12px;
         }
         body.light-theme .footer-text { color: #9ca3af; }
-        .footer-text span { color: rgba(255, 255, 255, 0.3); }
-        body.light-theme .footer-text span { color: #6d28d9; }
+        .footer-text span { color: #818cf8; }
+        body.light-theme .footer-text span { color: #4f46e5; }
         .hidden { display: none !important; }
+        .w-full { width: 100%; }
+        .mt-16 { margin-top: 16px; }
+        .mb-16 { margin-bottom: 16px; }
+        .gap-8 { gap: 8px; }
+        .flex { display: flex; }
+        .flex-wrap { flex-wrap: wrap; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
         /* ===== PDF VIEWER ===== */
         .pdf-viewer-container {
             position: fixed;
@@ -792,12 +701,8 @@
             right: 0;
             bottom: 0;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(40px) saturate(1.2);
+            background: #0f0f1a;
             padding: 20px;
-        }
-        body.light-theme .pdf-viewer-container {
-            background: rgba(255, 255, 255, 0.6);
         }
         .pdf-viewer-container .pdf-header {
             display: flex;
@@ -812,15 +717,71 @@
             height: calc(100vh - 120px);
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.06);
             position: relative;
-            background: rgba(255, 255, 255, 0.02);
         }
         .pdf-viewer-container .pdf-wrapper iframe {
             width: 100%;
             height: 100%;
             border: none;
             background: #fff;
+        }
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: rgba(30,30,50,0.95);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .modal-content h2 {
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+        .modal-content p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            color: #f1f5f9;
+            font-size: 16px;
+            margin-bottom: 16px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-content input:focus {
+            border-color: #818cf8;
+            background: rgba(255,255,255,0.08);
+        }
+        .modal-content .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-content .btn-group .btn {
+            flex: 1;
+            text-align: center;
         }
         /* ===== TOAST ===== */
         .toast {
@@ -835,17 +796,15 @@
             font-size: 14px;
             font-weight: 600;
             color: #fff;
-            backdrop-filter: blur(20px);
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             animation: slideUp 0.3s ease;
             max-width: 90%;
             text-align: center;
         }
-        .toast.error { background: rgba(239, 68, 68, 0.3); border-color: rgba(239, 68, 68, 0.1); }
-        .toast.success { background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.08); }
-        .toast.info { background: rgba(124, 58, 237, 0.2); border-color: rgba(124, 58, 237, 0.08); }
+        .toast.error { background: rgba(239,68,68,0.95); }
+        .toast.success { background: rgba(16,185,129,0.95); }
+        .toast.info { background: rgba(30,30,50,0.95); }
         @keyframes slideUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -853,9 +812,6 @@
     </style>
 </head>
 <body>
-
-<!-- Floating orb -->
-<div class="orb orb-1"></div>
 
 <div class="container" id="appContainer">
 
@@ -866,7 +822,7 @@
         <div class="login-container">
             <span class="lock-icon">🔐</span>
             <h1 style="font-size:28px;font-weight:800;color:#f1f5f9;margin-bottom:8px;">Access Required</h1>
-            <p style="color:rgba(255,255,255,0.5);font-size:15px;margin-bottom:24px;">Enter your name and access code</p>
+            <p style="color:#94a3b8;font-size:15px;margin-bottom:24px;">Enter your name and access code</p>
 
             <div class="input-group">
                 <label for="loginName">👤 Your Name</label>
@@ -898,7 +854,7 @@
         <div class="login-container">
             <span class="lock-icon" style="font-size:56px;margin-bottom:16px;display:block;">🛡️</span>
             <h1 style="font-size:28px;font-weight:800;color:#f1f5f9;margin-bottom:8px;">Admin Login</h1>
-            <p style="color:rgba(255,255,255,0.5);font-size:15px;margin-bottom:24px;">Enter your admin code to access panel</p>
+            <p style="color:#94a3b8;font-size:15px;margin-bottom:24px;">Enter your admin code to access panel</p>
 
             <div class="input-group">
                 <label for="adminCodeInput">🔑 Admin Code</label>
@@ -925,7 +881,7 @@
         <div class="top-bar">
             <div class="top-bar-left">
                 <div class="logo">
-                    <span class="logo-icon">📚</span>
+                    <span class="logo-icon" style="font-size:32px;">📚</span>
                     <span>LearnEasy</span>
                 </div>
                 <div class="user-info">
@@ -1023,15 +979,15 @@
         </div>
 
         <div class="grid grid-2">
-            <a href="#" class="card" id="viewPdfBtn" style="border-color: rgba(124, 58, 237, 0.1);">
-                <div class="icon" style="background: rgba(124, 58, 237, 0.04); color: #a78bfa;">📖</div>
+            <a href="#" class="card" id="viewPdfBtn" style="border-color: rgba(129,140,248,0.3);">
+                <div class="icon" style="background: rgba(129,140,248,0.15); color: #818cf8;">📖</div>
                 <div class="title">View</div>
-                <div class="sub" style="font-size:12px; color:rgba(255,255,255,0.4);">🔒 Read-Only • No Screenshot</div>
+                <div class="sub" style="font-size:12px; color:#94a3b8;">🔒 Read-Only • No Download</div>
             </a>
-            <a href="#" class="card" id="downloadPdfBtn" style="border-color: rgba(52, 211, 153, 0.1);">
-                <div class="icon" style="background: rgba(52, 211, 153, 0.04); color: #34d399;">⬇️</div>
+            <a href="#" class="card" id="downloadPdfBtn" style="border-color: rgba(251,191,36,0.3);">
+                <div class="icon" style="background: rgba(251,191,36,0.15); color: #fbbf24;">⬇️</div>
                 <div class="title">Download</div>
-                <div class="sub" style="font-size:12px; color:rgba(255,255,255,0.4);">📥 No Password Required</div>
+                <div class="sub" style="font-size:12px; color:#94a3b8;">🔑 Password Required</div>
             </a>
         </div>
 
@@ -1068,7 +1024,7 @@
         <div class="input-group">
             <label for="newAdminNameInput">New Admin Name</label>
             <input type="text" id="newAdminNameInput" placeholder="Enter new admin name" maxlength="30" />
-            <div class="hint" style="color:rgba(255,255,255,0.2);font-size:10px;margin-top:3px;">⚠️ User must be registered first</div>
+            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ User must be registered first</div>
         </div>
         <button class="btn btn-login green" id="changeAdminNameBtn" style="width:100%;">👑 Change Admin Name</button>
         <div class="error-msg" id="adminNameMsg"></div>
@@ -1097,7 +1053,7 @@
         <div class="input-group">
             <label for="newLoginCodeInput">New Login Code</label>
             <input type="text" id="newLoginCodeInput" placeholder="Enter new login code (min 4 characters)" maxlength="20" />
-            <div class="hint" style="color:rgba(255,255,255,0.2);font-size:10px;margin-top:3px;">⚠️ Changing this will logout all users</div>
+            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ Changing this will logout all users</div>
         </div>
         <div class="input-group">
             <label for="confirmLoginCodeInput">Confirm New Login Code</label>
@@ -1111,7 +1067,7 @@
         <div class="input-group">
             <label for="newAdminCodeInput">New Admin Code</label>
             <input type="text" class="admin-input" id="newAdminCodeInput" placeholder="Enter new admin code (min 4 characters)" maxlength="20" />
-            <div class="hint" style="color:rgba(255,255,255,0.2);font-size:10px;margin-top:3px;">⚠️ Changing this will logout admin</div>
+            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ Changing this will logout admin</div>
         </div>
         <div class="input-group">
             <label for="confirmAdminCodeInput">Confirm New Admin Code</label>
@@ -1119,6 +1075,20 @@
         </div>
         <button class="btn btn-login admin-login" id="changeAdminCodeBtn" style="width:100%;">🛡️ Change Admin Code</button>
         <div class="error-msg" id="adminCodeMsg"></div>
+
+        <!-- Change Download Password -->
+        <div class="section-title" style="margin-top:20px;">⬇️ Download Password</div>
+        <div class="input-group">
+            <label for="newDownloadPasswordInput">New Download Password</label>
+            <input type="text" id="newDownloadPasswordInput" placeholder="Enter new download password (min 4 characters)" maxlength="20" />
+            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ This password is required to download PDFs</div>
+        </div>
+        <div class="input-group">
+            <label for="confirmDownloadPasswordInput">Confirm New Download Password</label>
+            <input type="text" id="confirmDownloadPasswordInput" placeholder="Re-enter new download password" maxlength="20" />
+        </div>
+        <button class="btn btn-login green" id="changeDownloadPasswordBtn" style="width:100%;">⬇️ Change Download Password</button>
+        <div class="error-msg" id="downloadPasswordMsg"></div>
 
         <!-- Users List -->
         <div class="section-title" style="margin-top:24px;">👥 Registered Users (<span id="userCount">0</span>) <span class="online-count" id="onlineCount">🟢 0 online</span></div>
@@ -1128,9 +1098,9 @@
                 <input type="checkbox" id="selectAllUsers" />
                 <label for="selectAllUsers">Select All</label>
             </div>
-            <div class="right">
+            <!-- <div class="right">
                 <button class="btn-danger" id="logoutSelectedBtn">🚪 Logout Selected</button>
-            </div>
+            </div> -->
         </div>
 
         <div class="users-list" id="usersList">
@@ -1140,7 +1110,7 @@
         <div class="back-row">
             <button class="btn btn-back" id="adminPanelBackBtn2">← Back to Site</button>
             <a href="#" id="adminPanelSwitchAdmin" class="btn btn-back" style="text-decoration:none;">🔄 Switch Admin</a>
-            <button class="btn-danger" id="logoutAllBtn">🚪 Logout All Users</button>
+            <!-- <button class="btn-danger" id="logoutAllBtn">🚪 Logout All Users</button> -->
         </div>
 
         <div class="footer-text" style="margin-top:20px;">— by <span>Hasan</span></div>
@@ -1154,7 +1124,7 @@
             <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                 <button class="btn btn-back" id="pdfViewerBackBtn" style="font-size:14px; padding:10px 20px;">← Back</button>
                 <span class="class-badge" id="pdfViewerBadge">Class 10 - Chapter</span>
-                <span class="readonly-badge">🔒 Read-Only • No Screenshot</span>
+                <span class="readonly-badge">🔒 Read-Only</span>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
                 <button class="btn btn-theme" id="pdfViewerThemeToggle">☀️</button>
@@ -1165,13 +1135,29 @@
         </div>
     </div>
 
+    <!-- ============================================================ -->
+    <!-- DOWNLOAD MODAL -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-content">
+            <h2>🔑 Enter Password</h2>
+            <p>Enter download password to continue</p>
+            <input type="password" id="downloadPasswordInput" placeholder="Enter download password" />
+            <div class="btn-group">
+                <button class="btn btn-login" id="downloadConfirmBtn">⬇️ Download</button>
+                <button class="btn btn-back" id="downloadCancelBtn">Cancel</button>
+            </div>
+            <div class="error-msg" id="downloadError">❌ Invalid password. Please try again.</div>
+        </div>
+    </div>
+
 </div>
 
 <script>
     // ============================================================
     // 🔥 GOOGLE APPS SCRIPT URL - YAHAN DAALEIN
     // ============================================================
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYO2Escziwlt-qAsLd7MDKD1bf2eXJTsaGRL1UUAb_fc5s_kMHXWEqBaPI3eBPlno7vQ/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwW77K-601fyfQ-pEwXF4NzhCqCOaUEUQYd3t28W5YU2x0pCHxTHV7vhKtCFcUPQn6low/exec';
 
     // ============================================================
     // 📚 CHAPTER DATA (Sirf Science)
@@ -1301,7 +1287,7 @@
         const data = await apiCall('getSettings');
         if (data.error) {
             console.error('Error getting settings:', data.error);
-            return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Hasan' };
+            return { LoginCode: '1234', AdminCode: 'admin123', AdminName: 'Hasan', DownloadPassword: 'download123' };
         }
         return data;
     }
@@ -1342,7 +1328,7 @@
             loginCode: loginCode,
             adminCode: adminCode,
             adminName: adminName,
-            downloadPassword: downloadPassword || 'download123'
+            downloadPassword: downloadPassword
         });
         return data;
     }
@@ -1563,12 +1549,16 @@
     }
 
     // ============================================================
-    // PDF VIEWER WITH SCREENSHOT BLOCK
+    // PDF VIEWER
     // ============================================================
     let pdfViewerActive = false;
+    let currentPdfClass = '';
+    let currentPdfChapter = '';
 
     function viewPdf(classNum, chapterId) {
         const pdfUrl = `${classNum}${chapterId}.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
+        currentPdfClass = classNum;
+        currentPdfChapter = chapterId;
 
         const chapters = CHAPTERS[classNum] || [];
         const ch = chapters.find(c => c.id === chapterId);
@@ -1595,7 +1585,7 @@
     }
 
     // ============================================================
-    // INTERACTION BLOCK (Screenshot + Copy + Right-click)
+    // INTERACTION BLOCK
     // ============================================================
     function disableInteractions() {
         document.addEventListener('contextmenu', blockEvent);
@@ -1604,11 +1594,8 @@
         document.addEventListener('copy', blockEvent);
         document.addEventListener('selectstart', blockEvent);
         document.addEventListener('keyup', blockPrintScreen);
-        document.addEventListener('visibilitychange', blockVisibilityChange);
-        document.addEventListener('touchstart', blockTouchStart);
         document.body.style.userSelect = 'none';
         document.body.style.webkitUserSelect = 'none';
-        document.body.style.webkitTouchCallout = 'none';
     }
 
     function enableInteractions() {
@@ -1618,11 +1605,8 @@
         document.removeEventListener('copy', blockEvent);
         document.removeEventListener('selectstart', blockEvent);
         document.removeEventListener('keyup', blockPrintScreen);
-        document.removeEventListener('visibilitychange', blockVisibilityChange);
-        document.removeEventListener('touchstart', blockTouchStart);
         document.body.style.userSelect = '';
         document.body.style.webkitUserSelect = '';
-        document.body.style.webkitTouchCallout = '';
     }
 
     function blockEvent(e) {
@@ -1655,22 +1639,8 @@
         }
     }
 
-    function blockVisibilityChange() {
-        if (document.hidden) {
-            showToast('⛔ Screenshots are disabled.', 'error');
-        }
-    }
-
-    function blockTouchStart(e) {
-        if (e.touches && e.touches.length > 1) {
-            e.preventDefault();
-            showToast('⛔ Screenshots are disabled.', 'error');
-            return false;
-        }
-    }
-
     // ============================================================
-    // DOWNLOAD PDF (No Password - Direct Download)
+    // DOWNLOAD PDF (Password Protected)
     // ============================================================
     let downloadClass = '';
     let downloadChapter = '';
@@ -1680,15 +1650,40 @@
         downloadClass = classNum;
         downloadChapter = chapterId;
         downloadChapterName = chapterName;
-        
-        const pdfUrl = `${downloadClass}${downloadChapter}.pdf`;
-        const link = document.createElement('a');
-        link.href = pdfUrl;
-        link.download = `${downloadClass}_${downloadChapter}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        showToast('✅ Download started!', 'success');
+        document.getElementById('downloadModal').classList.add('active');
+        document.getElementById('downloadPasswordInput').value = '';
+        document.getElementById('downloadError').classList.remove('show');
+        document.getElementById('downloadPasswordInput').focus();
+    }
+
+    function hideDownloadModal() {
+        document.getElementById('downloadModal').classList.remove('active');
+    }
+
+    async function handleDownload() {
+        const password = document.getElementById('downloadPasswordInput').value.trim();
+        const settings = await getSettings();
+        const correctPassword = settings.DownloadPassword || 'download123';
+
+        if (password === correctPassword) {
+            const pdfUrl = `${downloadClass}${downloadChapter}.pdf`;
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = `${downloadClass}_${downloadChapter}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            hideDownloadModal();
+            showToast('✅ Download started successfully!', 'success');
+        } else {
+            document.getElementById('downloadError').textContent = '❌ Invalid password. Please try again.';
+            document.getElementById('downloadError').classList.add('show');
+            document.getElementById('downloadPasswordInput').value = '';
+            document.getElementById('downloadPasswordInput').focus();
+            setTimeout(() => {
+                document.getElementById('downloadError').classList.remove('show');
+            }, 3000);
+        }
     }
 
     // ============================================================
@@ -1856,8 +1851,40 @@
         }, 2000);
     }
 
+    async function changeDownloadPassword() {
+        const newPassword = document.getElementById('newDownloadPasswordInput').value.trim();
+        const confirmPassword = document.getElementById('confirmDownloadPasswordInput').value.trim();
+        const msgEl = document.getElementById('downloadPasswordMsg');
+
+        if (!newPassword || newPassword.length < 4) {
+            msgEl.textContent = '⚠️ Password must be at least 4 characters long.';
+            msgEl.classList.add('show');
+            return;
+        }
+        if (newPassword !== confirmPassword) {
+            msgEl.textContent = '❌ Passwords do not match.';
+            msgEl.classList.add('show');
+            return;
+        }
+
+        const settings = await getSettings();
+        await updateSettings(settings.LoginCode, settings.AdminCode, settings.AdminName, newPassword);
+
+        msgEl.textContent = `✅ Download password changed to "${newPassword}"!`;
+        msgEl.classList.add('show');
+        document.getElementById('newDownloadPasswordInput').value = '';
+        document.getElementById('confirmDownloadPasswordInput').value = '';
+        setTimeout(() => msgEl.classList.remove('show'), 4000);
+    }
+
     // ============================================================
-    // LOGOUT FUNCTIONS
+    // CODE SHOW/HIDE (Admin Panel)
+    // ============================================================
+    let loginVisible = false;
+    let adminVisible = false;
+
+    // ============================================================
+    // LOGOUT FUNCTIONS (Sirf LocalStorage Clear + Sheet Expire)
     // ============================================================
     function logoutUser() {
         if (confirm('Are you sure you want to logout?')) {
@@ -2031,6 +2058,16 @@
         document.getElementById('pdfViewerBackBtn').addEventListener('click', closePdfViewer);
         document.getElementById('pdfViewerThemeToggle').addEventListener('click', toggleTheme);
 
+        // ===== DOWNLOAD MODAL =====
+        document.getElementById('downloadConfirmBtn').addEventListener('click', handleDownload);
+        document.getElementById('downloadPasswordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleDownload();
+        });
+        document.getElementById('downloadCancelBtn').addEventListener('click', hideDownloadModal);
+        document.getElementById('downloadModal').addEventListener('click', function(e) {
+            if (e.target === this) hideDownloadModal();
+        });
+
         // ===== ADMIN PANEL =====
         document.getElementById('adminPanelBackBtn').addEventListener('click', function() {
             if (getLS(LS_KEYS.LOGGED_IN, false)) {
@@ -2056,11 +2093,9 @@
         document.getElementById('changeLoginCodeBtn').addEventListener('click', changeLoginCode);
         document.getElementById('changeAdminCodeBtn').addEventListener('click', changeAdminCode);
         document.getElementById('changeAdminNameBtn').addEventListener('click', changeAdminName);
+        document.getElementById('changeDownloadPasswordBtn').addEventListener('click', changeDownloadPassword);
 
         // ===== CODE SHOW/HIDE =====
-        let loginVisible = false;
-        let adminVisible = false;
-
         document.getElementById('showLoginCodeBtn').addEventListener('click', function() {
             loginVisible = !loginVisible;
             const el = document.getElementById('currentLoginCodeDisplay');
