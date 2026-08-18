@@ -6,7 +6,10 @@
     <title>NCERT Notes - Science</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== PURPLE THEME ===== */
+        /* ===== SAME STYLES AS BEFORE ===== */
+        /* (copy all styles from your existing index.html) */
+        /* For brevity, I'm including only the critical part below */
+        /* Please copy all styles from your previous index.html */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -957,8 +960,8 @@
         </div>
         <div class="input-group">
             <label for="newAdminNameInput">New Admin Name</label>
-            <input type="text" id="newAdminNameInput" placeholder="Enter new admin name" maxlength="30" />
-            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ User must be registered first</div>
+            <input type="text" id="newAdminNameInput" placeholder="Enter new admin name (comma seperated for multiple)" maxlength="100" />
+            <div class="hint" style="color:#64748b;font-size:10px;margin-top:3px;">⚠️ Multiple admins: Hasan, Ali, Sara</div>
         </div>
         <button class="btn btn-login green" id="changeAdminNameBtn" style="width:100%;">👑 Change Admin Name</button>
         <div class="error-msg" id="adminNameMsg"></div>
@@ -1207,7 +1210,6 @@
         const user = users.find(u => u.Name.toLowerCase() === userName.toLowerCase());
         
         if (!user) {
-            // User sheet se delete ho chuka hai
             return false;
         }
         
@@ -1215,6 +1217,23 @@
         const isLoggedIn = (Date.now() - loginTime) < SESSION_DURATION;
         
         return isLoggedIn;
+    }
+
+    // ============================================================
+    // 🔥 MULTIPLE ADMIN CHECK
+    // ============================================================
+    function isCurrentUserAdmin() {
+        const currentUser = getLS(LS_KEYS.USER_NAME, '');
+        if (!currentUser) return false;
+        
+        const adminNames = getLS('adminNamesList', 'Hasan');
+        const adminList = adminNames.split(',').map(n => n.trim().toLowerCase());
+        return adminList.includes(currentUser.toLowerCase());
+    }
+
+    function getAdminNamesList() {
+        const adminNames = getLS('adminNamesList', 'Hasan');
+        return adminNames.split(',').map(n => n.trim());
     }
 
     // ============================================================
@@ -1276,7 +1295,11 @@
         setLS(LS_KEYS.LOGGED_IN, true);
         setLS(LS_KEYS.USER_NAME, name);
         setLS(LS_KEYS.LOGIN_TIME, Date.now());
-        setLS(LS_KEYS.IS_ADMIN, name.toLowerCase() === settings.AdminName.toLowerCase());
+        
+        // 🔥 Multiple admin check
+        setLS('adminNamesList', settings.AdminName || 'Hasan');
+        const isAdmin = isCurrentUserAdmin();
+        setLS(LS_KEYS.IS_ADMIN, isAdmin);
 
         document.getElementById('loginName').value = '';
         document.getElementById('loginCodeInput').value = '';
@@ -1322,7 +1345,6 @@
             return;
         }
         
-        // 🔥 Sheet validation
         const isValid = await checkLoginStatusFromSheet();
         if (!isValid) {
             setLS(LS_KEYS.LOGGED_IN, false);
@@ -1337,7 +1359,10 @@
         const name = getLS(LS_KEYS.USER_NAME, 'Guest');
         document.getElementById('mainUserAvatar').textContent = name.charAt(0).toUpperCase();
         document.getElementById('mainUserName').textContent = name;
-        const isAdmin = getLS(LS_KEYS.IS_ADMIN, false);
+        
+        // 🔥 Multiple admin check
+        const isAdmin = isCurrentUserAdmin();
+        setLS(LS_KEYS.IS_ADMIN, isAdmin);
         document.getElementById('mainAdminBadge').style.display = isAdmin ? 'inline-block' : 'none';
         document.getElementById('mainAdminPanelBtn').style.display = isAdmin ? 'inline-block' : 'none';
         showPage('page-main');
@@ -1349,7 +1374,6 @@
             return;
         }
         
-        // 🔥 Sheet validation
         const isValid = await checkLoginStatusFromSheet();
         if (!isValid) {
             setLS(LS_KEYS.ADMIN_LOGGED_IN, false);
@@ -1517,9 +1541,12 @@
             return;
         }
 
+        // 🔥 Multiple admin check for badge
+        const adminList = adminName.split(',').map(n => n.trim().toLowerCase());
+
         let html = '';
         users.forEach(user => {
-            const isAdmin = user.Name.toLowerCase() === adminName.toLowerCase();
+            const isAdmin = adminList.includes(user.Name.toLowerCase());
             const isLoggedIn = (Date.now() - new Date(user.LoginTime).getTime()) < SESSION_DURATION;
             html += `
                 <div class="user-item">
@@ -1602,15 +1629,27 @@
             return;
         }
         const users = await getUsers();
-        if (!users.some(u => u.Name.toLowerCase() === newName.toLowerCase())) {
-            msgEl.textContent = `❌ User "${newName}" does not exist.`;
+        const adminList = newName.split(',').map(n => n.trim());
+        
+        // Check if all admin names exist in users list
+        const allExist = adminList.every(admin => 
+            users.some(u => u.Name.toLowerCase() === admin.toLowerCase())
+        );
+        
+        if (!allExist) {
+            msgEl.textContent = `❌ One or more admin names do not exist.`;
             msgEl.classList.add('show');
             return;
         }
+        
         const settings = await getSettings();
         await updateSettings(settings.LoginCode, settings.AdminCode, newName, settings.DownloadPassword);
         document.getElementById('adminPanelAdminName').textContent = newName;
-        msgEl.textContent = `✅ Admin name changed to "${newName}"!`;
+        
+        // Update local admin list
+        setLS('adminNamesList', newName);
+        
+        msgEl.textContent = `✅ Admin names changed to "${newName}"!`;
         msgEl.classList.add('show');
         document.getElementById('newAdminNameInput').value = '';
         setLS(LS_KEYS.ADMIN_LOGGED_IN, false);
@@ -1653,7 +1692,6 @@
         const selectedNames = Array.from(checkboxes).map(cb => cb.dataset.name);
         const currentUser = getLS(LS_KEYS.USER_NAME, '');
 
-        // Sheet mein login time expire
         for (const name of selectedNames) {
             await logoutUserFromSheet(name);
         }
@@ -1763,7 +1801,7 @@
         // Main Page
         document.getElementById('mainLogoutBtn').addEventListener('click', logoutUser);
         document.getElementById('mainAdminPanelBtn').addEventListener('click', function() {
-            if (getLS(LS_KEYS.IS_ADMIN, false)) {
+            if (isCurrentUserAdmin()) {
                 setLS(LS_KEYS.ADMIN_LOGGED_IN, true);
                 setLS(LS_KEYS.ADMIN_LOGIN_TIME, Date.now());
                 showAdminPanel();
@@ -1842,6 +1880,8 @@
         if (getLS(LS_KEYS.LOGGED_IN, false)) {
             const isValid = await checkLoginStatusFromSheet();
             if (isValid) {
+                // Update admin status
+                setLS('adminNamesList', (await getSettings()).AdminName || 'Hasan');
                 showMainPage();
             } else {
                 setLS(LS_KEYS.LOGGED_IN, false);
@@ -1876,7 +1916,7 @@
             }
         });
 
-        console.log('🔒 App loaded with sheet validation.');
+        console.log('🔒 App loaded with multiple admin support.');
     });
 </script>
 
